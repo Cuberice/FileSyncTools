@@ -1,0 +1,24 @@
+﻿@model SyncMobile.Models.SyncGroup
+
+@section Header
+{
+    <div data-role="navbar">
+        <ul>
+            <li>@Html.ActionLink("Watch", "Index", "Home")</li>
+            <li>@Html.ActionLink("Synchronized", "Synced", "Home", new { @class = "ui-btn-active" })</li>
+            <li>@Html.ActionLink("Not Synchronized", "NotSynced", "Home")</li>
+            <li>@Html.ActionLink("Not Watched", "NotWatched", "Home")</li>
+            <li>@Html.ActionLink("Error Files", "ErrorFiles", "Home")</li>
+        </ul>
+    </div>
+}
+
+@using (Html.BeginForm("Synced", "Home", FormMethod.Post, new { @id = "editSettings" }))
+{
+    <input value="Submit" type="submit">
+    <div>
+        <ul id="listview" data-role="listview" class="ui-body-a" data-split-theme="b" data-count-theme="a" data-inset="true">
+            @Html.EditorFor(m => m.SyncInformations)
+        </ul>
+    </div>
+}

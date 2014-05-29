@@ -1,0 +1,12 @@
+﻿@model SyncMobile.Models.SyncGroup
+
+
+@using (Html.BeginForm("NotSynced", "Home", FormMethod.Post, new { @id = "editSettings" }))
+{
+    <input value="Submit" type="submit">
+    <div>
+        <ul data-role="listview" class="ui-body-a" data-split-theme="b" data-count-theme="a" data-inset="true">
+            @Html.EditorFor(m => m.SyncInformations)
+        </ul>
+    </div>
+}

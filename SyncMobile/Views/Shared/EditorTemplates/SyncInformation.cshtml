@@ -1,0 +1,40 @@
+﻿@using SyncMobile.Utils
+@model SyncMobile.Models.SyncInformation
+
+@if (Model.IsPath)
+{
+    @Html.PathListViewFor(m => m.PathName, m => m.PathFileCount)
+}
+
+<li>
+    <a href="#">
+        <div class='ui-grid-a'>
+            <div class='ui-block-a'>
+                @Html.HeaderFor(m => m.FileName, 4)
+                @Html.ParagraphFor(m => "Season: " + m.Season + " - Ep: " + m.Episode)
+
+                @Html.HiddenFor(m => m.FileGUID)
+                @Html.HiddenFor(m => m.AllowIsSyncEdit)
+                @Html.HiddenFor(m => m.AllowIsWatchedEdit)
+                @Html.HiddenFor(m => m.Error)
+                @Html.HiddenFor(m => m.IsMissing)
+
+            </div>
+
+            <div class='ui-block-b'>
+                <div class="check-inline" style="margin-right: 30px">
+
+                    @Html.LabelFor(model => model.IsWatched)
+                    @Html.CheckBoxFor(model => model.IsWatched, "b", m => m.AllowIsWatchedEdit)
+                </div>
+                <div class="check-inline">
+
+                    @Html.LabelFor(model => model.IsSynced)
+                    @Html.CheckBoxFor(model => model.IsSynced, "b", m => m.AllowIsSyncEdit)      @*When Disabled always returns False *@
+                </div>
+            </div>
+        </div>
+    </a>
+@*    <a href="#purchase" data-rel="popup" data-position-to="window" data-transition="pop">Purchase album</a>*@
+    @Html.ActionLink("Edit", "EditItem", "Home", new { FileGUID = Model.FileGUID })
+</li>

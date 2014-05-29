@@ -1,0 +1,55 @@
+﻿@using SyncMobile.Utils
+@model SyncMobile.Models.SyncInformation
+
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+@section Header
+{
+    @{ Html.RenderPartial("Partials/AdditionalNavBar"); }
+}
+
+
+<br/>
+
+@Ajax.ActionLink("Click Me", "_TestPartial", "Home", new AjaxOptions()
+                                                        {
+                                                            HttpMethod = "GET",
+                                                            InsertionMode = InsertionMode.Replace,
+                                                            UpdateTargetId = "MainHeaderDiv"
+                                                        })
+
+<h4>Main Header</h4>
+<div id="MainHeaderDiv">
+   
+    @Html.Partial("_TestPartial")
+
+</div>
+
+
+
+
+@*<script type="text/javascript">*@
+@*    $(document).ready*@
+@*        (*@
+@*            function ()*@
+@*            {*@
+@*                alert("Clicked");*@
+@*//                $("#AnchorID").click(function () {*@
+@*//                    alert("Clicked");*@
+@*//                });*@
+@*            }*@
+@*        )*@
+@*</script>*@
+
+
+
+
+
+
+
+
+
+
+
+
+

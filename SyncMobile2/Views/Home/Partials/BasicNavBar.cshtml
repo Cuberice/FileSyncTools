@@ -1,0 +1,17 @@
+﻿@using SyncMobile.Utils
+<div data-role="navbar">
+    <ul>
+        <ul>
+            <li>@Html.IconAnchor(new Options("Home", "RefreshData"){Icon = Icons.Refresh})</li>
+            <li>@Html.IconAnchor(new Options("Home", "Index") { Icon = Icons.Home })</li>
+        </ul>
+        <ul>
+            <li>@Html.IconAnchor(new Options("Home", "Synced") { Icon = Icons.ArrowDown })</li>
+            <li>@Html.IconAnchor(new Options("Home", "NotSynced") { Icon = Icons.Minus })</li>
+        </ul>
+        <ul>
+            <li>@Html.IconAnchor(new Options("Home", "NotWatched") { Icon = Icons.Info })</li>
+            <li>@Html.IconAnchor(new Options("Home", "ErrorFiles") { Icon = Icons.Alert })</li>
+        </ul>
+    </ul>
+</div>

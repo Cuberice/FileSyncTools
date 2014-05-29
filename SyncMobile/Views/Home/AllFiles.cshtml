@@ -1,0 +1,24 @@
+﻿@model SyncMobile.Models.PathGroup
+    
+@section Header
+{
+    <div data-role="navbar">
+        <ul>
+            <li>@Html.ActionLink("Watch", "Index", "Home")</li>
+            <li>@Html.ActionLink("All", "AllFiles", "Home", new { @class = "ui-btn-active" })</li>
+            <li>@Html.ActionLink("Error Files", "ErrorFiles", "Home")</li>
+        </ul>
+    </div>
+}
+
+@using (Html.BeginForm("AllFiles", "Home"))
+{
+    <div data-role="collapsible-set">
+        <ul data-role="listview"  data-inset="true">        @*class="ui-body-a"*@
+            @Html.EditorFor(m => m.PathInformations)
+        </ul>
+    </div>
+}
+
+
+

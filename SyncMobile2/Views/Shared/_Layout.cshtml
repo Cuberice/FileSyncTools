@@ -1,0 +1,47 @@
+﻿@using System.Web.Mvc.Html
+@using SyncMobile.Utils
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Synchronization</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    @Styles.Render("~/Content/mobileCss", "~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    <div data-role="page" data-theme="b">
+        <div data-role="header">
+            @if (IsSectionDefined("Header"))
+            {
+@*                <div class="ui-bar ui-bar-a">*@
+@*                    @Html.InlineButton("Test", "Test", "Home", HtmlHelperExtensions.Icons.CheckMark, false, true)                          *@
+@*                </div>*@
+
+                @RenderSection("Header")
+            }
+            else
+            {
+                Html.RenderPartial("~/Views/Home/Partials/BasicNavBar.cshtml"); 
+            }
+        </div>
+        <div data-role="content">
+            @RenderBody()
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    <script>
+        $(document).on("mobileinit", function () {
+            $.mobile.ajaxEnabled = false;
+        });
+    </script>
+    @Scripts.Render("~/bundles/jquerymobile")
+    @Scripts.Render("~/bundles/myscripts")
+    @RenderSection("scripts", false)
+</body>
+
+</html>

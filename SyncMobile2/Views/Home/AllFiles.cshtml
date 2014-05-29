@@ -1,0 +1,20 @@
+﻿@model SyncMobile.Models.PathGroup
+    
+@section Header
+{
+    @{ Html.RenderPartial("Partials/AdditionalNavBar"); }
+}
+
+
+
+@using (Html.BeginForm("AllFiles", "Home"))
+{
+    <div data-role="collapsible-set">
+        <ul data-role="listview"  data-inset="true">        @*class="ui-body-a"*@
+            @Html.EditorFor(m => m.PathInformations)
+        </ul>
+    </div>
+}
+
+
+

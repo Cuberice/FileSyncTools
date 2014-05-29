@@ -1,0 +1,19 @@
+﻿
+.ui-bar {
+	padding: 0.1em 0.5em
+}
+
+	a.nav-inline {
+	display: inline;
+	float: right;
+}
+
+.custom-count-pos{
+    font-size: 11px;
+    font-weight: bold;
+    padding: 0.2em 0.5em;
+    float: right;
+		display: inline
+}
+	/*0.1em 0.5em*/
+
