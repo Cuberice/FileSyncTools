@@ -122,6 +122,24 @@ namespace Common
 		{
 			return list.Any(p => p.LastSyncDate.HasValue) ? list.Select(p => p.LastSyncDate).Where(d => d.HasValue).OrderByDescending(d => d.Value).First() : null; 
 		}
+
+		/// <summary>
+		/// Creates a Bulleted String from the given Format
+		/// </summary>
+		/// <param name="strings"></param>
+		/// <param name="bullet"></param>
+		/// <param name="format">Format for each string element {Bullet}{string}</param>
+		/// <returns></returns>
+		public static string BulletedMessage(string[] strings, string format)
+		{
+			const char smallBullet = '\u00b7';
+			const char mediumBullet = '\u25cf';
+
+			format = format ?? "{0}{1}";
+
+			string message = strings.Aggregate(string.Empty, (current, str) => current + (string.Format(format, mediumBullet, str) + "\n"));
+			return message;
+		}
 		#endregion
 		
 		#region Terra Copy Sync
@@ -338,15 +356,7 @@ namespace Common
 		{
 			return SyncPathList.Any(p => p.SourceDir.FullName == source && p.DestinationDir.FullName == dest);
 		}
-
-		public void UpdateAllPathsDatabase()
-		{
-			foreach (SyncPath nsp in SyncPathList)
-			{
-				Queries.SyncPath_Update2(DbConnection, nsp);
-			}
-		}
-
+		
 		#endregion
 
 		#region UpdateCollectionEvent
@@ -401,6 +411,8 @@ namespace Common
 
 		#region Database
 
+		#region Connection
+
 		public bool TestConnection()
 		{
 			try
@@ -415,126 +427,12 @@ namespace Common
 			}
 		}
 
-		/// <summary>
-		/// Reads the Database and Updates the Collection
-		/// </summary>
-		public bool ReadFileCollection()
-		{
-			try
-			{
-				SyncPathList = Queries.ReadFileData(DbConnection);
-				return SyncPathList.Any();
-			}
-			catch (Exception e)
-			{
-				Trace.WriteLine(e);
-				return false;
-			}
-			finally
-			{
-				RaiseSyncPathChanged();
-			}
-		}
-
-		public void UpdateFilesCollectionApp()
-		{
-			ReadFileCollection();
-			UpdateFilesCollection(DbConnection, SyncPathList, GetExtensionSetting(DbConnection), true);
-		}
-		
-		/// <summary>
-		/// Updates the Source Files on the system to the Database
-		/// </summary>
-		public static void UpdateFilesCollectionWeb()
-		{
-			SQLiteConnection conn = GetDataConnection();
-			UpdateFilesCollection(conn, View_GetAllData(), GetExtensionSetting(conn), false);
-		}
-
-
-		public static void SubmitFilesWeb(List<SyncFile> list)
-		{
-			SQLiteConnection conn = GetDataConnection();
-			list.ForEach(sf =>
-				{
-					if (sf.AllowIsSyncEdit && sf.AllowIsWatchedEdit)
-						Queries.SyncFiles_Update(conn, sf);
-					else if(sf.AllowIsWatchedEdit)
-						Queries.SyncFiles_UpdateWatch(conn, sf);
-					else if(sf.IsSynced)
-						Queries.SyncFiles_UpdateSync(conn, sf);
-				});
-		}
-
-		/// <summary>
-		/// Updates the Existing files on the Filesystem to the Database
-		/// </summary>
-		/// <param name="conn"></param>
-		/// <param name="list"></param>
-		/// <param name="skip"></param>
-		/// <param name="checkmissingfiles"></param>
-		public static void UpdateFilesCollection(SQLiteConnection conn, List<SyncPath> list, List<string> skip, bool checkmissingfiles)
-		{
-			try
-			{
-				foreach(SyncPath sp in list)
-				{
-					if (sp.SourceDir == null || !sp.SourceDir.RefreshExist())
-					{
-						sp.SetError();
-						continue;
-					}
-
-					List<FileInfo> files = new List<FileInfo>();
-					files = sp.RecurseDirs(sp.SourceDir, files);
-					files = files.Where(f => !skip.Contains(f.Extension.Trim(), StringComparer.OrdinalIgnoreCase)).ToList();
-					
-					foreach (FileInfo fi in files.Where(fi => !Queries.SyncFiles_ExistInDb(conn, fi)))
-					{
-						sp.AddFile(fi);
-					}
-				}
-
-				if (checkmissingfiles)
-					CheckMissingFiles(list);
-
-				foreach (SyncPath sp in list)
-				{
-					foreach (SyncFile sf in sp.Files)
-					{
-						Queries.UpdateFileDatabase(conn, sp, sf);
-					}
-				}
-			}
-			catch (Exception e)
-			{
-				Trace.WriteLine(e);
-			}
-		}
-
-		public void UpdateDatabaseSync(SQLiteConnection conn, SyncPath sp )
-		{
-			try
-			{
-				bool updated = sp.Files.Aggregate(false, (current, sf) => current | Queries.UpdateFileDatabase(conn, sp, sf));
-
-				if (updated)
-					Queries.SyncPath_Update1(conn, sp);
-				
-			}
-			catch (Exception e)
-			{
-				Trace.WriteLine(e);
-			}
-		}
-
 		public void WaitForConnection(SQLiteConnection conn)
 		{
 			do
 			{
 				Thread.Sleep(100);
-			} 
-			while (conn.State == ConnectionState.Open);
+			} while (conn.State == ConnectionState.Open);
 		}
 
 		/// <summary>
@@ -562,7 +460,8 @@ namespace Common
 			}
 			catch (Exception e)
 			{
-				Trace.WriteLine(string.Format("FAILED TO OPEN A DATABASE CONNECTION TO {0}\n{1}", Settings.Default.DbConnectionString, e));
+				Trace.WriteLine(string.Format("FAILED TO OPEN A DATABASE CONNECTION TO {0}\n{1}",
+					Settings.Default.DbConnectionString, e));
 				return null;
 			}
 		}
@@ -570,6 +469,172 @@ namespace Common
 		public static string GetDataConnectionString()
 		{
 			return GetDataConnection().ConnectionString;
+		}
+
+		#endregion
+
+		#region Update Files Collection
+
+		/// <summary>
+		/// Reads the Database and Updates the Collection
+		/// </summary>
+		public bool ReadFileCollection()
+		{
+			try
+			{
+				SyncPathList = Queries.ReadFileData(DbConnection);
+				return SyncPathList.Any();
+			}
+			catch (Exception e)
+			{
+				Trace.WriteLine(e);
+				return false;
+			}
+			finally
+			{
+				RaiseSyncPathChanged();
+			}
+		}
+
+		public void UpdateFilesCollectionApp()
+		{
+			ReadFileCollection();
+			UpdateFilesCollection(DbConnection, SyncPathList, GetExtensionSetting(DbConnection), true);
+		}
+
+		/// <summary>
+		/// Updates the Source Files on the system to the Database
+		/// </summary>
+		public static void UpdateFilesCollectionWeb()
+		{
+			SQLiteConnection conn = GetDataConnection();
+			UpdateFilesCollection(conn, View_GetAllData(), GetExtensionSetting(conn), false);
+		}
+
+		/// <summary>
+		/// Updates the Existing files on the Filesystem to the Database
+		/// </summary>
+		/// <param name="conn"></param>
+		/// <param name="list"></param>
+		/// <param name="skip"></param>
+		/// <param name="checkmissingfiles"></param>
+		public static void UpdateFilesCollection(SQLiteConnection conn, List<SyncPath> list, List<string> skip, bool checkmissingfiles)
+		{
+			try
+			{
+				foreach (SyncPath sp in list)
+				{
+					if (sp.SourceDir == null || !sp.SourceDir.RefreshExist())
+					{
+						sp.SetError();
+						continue;
+					}
+
+					List<FileInfo> files = new List<FileInfo>();
+					files = sp.RecurseDirs(sp.SourceDir, files);
+					files = files.Where(f => !skip.Contains(f.Extension.Trim(), StringComparer.OrdinalIgnoreCase)).ToList();
+
+					foreach (FileInfo fi in files.Where(fi => !Queries.SyncFiles_ExistInDb(conn, fi)))
+					{
+						sp.AddFile(fi);
+					}
+				}
+
+				if (checkmissingfiles)
+					CheckMissingFiles(list);
+
+				foreach (SyncPath sp in list)
+				{
+					foreach (SyncFile sf in sp.Files)
+					{
+						Queries.UpdateFileDatabase(conn, sp, sf);
+					}
+				}
+			}
+			catch (Exception e)
+			{
+				Trace.WriteLine(e);
+			}
+		}
+
+		public void AddDestinationFiles(string[] fileNames)
+		{
+			if (!fileNames.Any())
+				return;
+
+			FileInfo dfi = new FileInfo(fileNames.First());
+			DirectoryInfo di = new DirectoryInfo(dfi.DirectoryName);
+
+			if (!SyncPathList.Any(sp => sp.DestinationDir.FullName == di.FullName))
+			{
+				DirectoryInfo sd = SyncPathList.First().SourceDir.Parent.Parent.CreateSubdirectory(di.Name);
+
+				SyncPath nsp = new SyncPath(di.Name, sd.FullName, di.FullName);
+				SyncPathList.Add(nsp);
+				Queries.UpdatePathDatabase(DbConnection, nsp);
+			}
+
+			if (SyncPathList.Any(sp => sp.DestinationDir.FullName == di.FullName))
+			{
+				SyncPath sp = SyncPathList.First(spl => spl.DestinationDir.FullName == di.FullName);
+				foreach (string sfn in fileNames)
+				{
+					FileInfo fi = new FileInfo(sfn);
+					sp.AddFile(fi);
+				}
+
+				foreach (SyncFile sf in sp.Files)
+				{
+					sf.SetSynced();
+					Queries.UpdateFileDatabase(DbConnection, sp, sf);
+				}
+			}
+
+			RaiseSyncPathChanged();
+		}
+
+		#endregion
+
+		#region Update Path Collection
+
+		public void UpdateAllPathsDatabase()
+		{
+			foreach (SyncPath nsp in SyncPathList)
+			{
+				Queries.SyncPath_Update(DbConnection, nsp);
+			}
+		}
+
+		public void UpdateDatabaseSync(SQLiteConnection conn, SyncPath sp)
+		{
+			try
+			{
+				bool updated = sp.Files.Aggregate(false, (current, sf) => current | Queries.UpdateFileDatabase(conn, sp, sf));
+
+				if (updated)
+					Queries.SyncPath_UpdateError(conn, sp);
+
+			}
+			catch (Exception e)
+			{
+				Trace.WriteLine(e);
+			}
+		}
+
+		#endregion
+
+		public static void SubmitFilesWeb(List<SyncFile> list)
+		{
+			SQLiteConnection conn = GetDataConnection();
+			list.ForEach(sf =>
+			{
+				if (sf.AllowIsSyncEdit && sf.AllowIsWatchedEdit)
+					Queries.SyncFiles_Update(conn, sf);
+				else if (sf.AllowIsWatchedEdit)
+					Queries.SyncFiles_UpdateWatch(conn, sf);
+				else if (sf.IsSynced)
+					Queries.SyncFiles_UpdateSync(conn, sf);
+			});
 		}
 
 		#endregion
@@ -741,59 +806,7 @@ namespace Common
 
 		#endregion
 		
-		/// <summary>
-		/// Creates a Bulleted String from the given Format
-		/// </summary>
-		/// <param name="strings"></param>
-		/// <param name="bullet"></param>
-		/// <param name="format">Format for each string element {Bullet}{string}</param>
-		/// <returns></returns>
-		public static string BulletedMessage(string[] strings, string format)
-		{
-			const char smallBullet = '\u00b7';
-			const char mediumBullet = '\u25cf';
-
-			format = format ?? "{0}{1}";
-
-			string message = strings.Aggregate(string.Empty, (current, str) => current + (string.Format(format, mediumBullet, str) + "\n"));
-			return message;
-		}
-		
-		public void AddDestinationFiles(string[] fileNames)
-		{
-			if(!fileNames.Any())
-				return;
-
-			FileInfo dfi = new FileInfo(fileNames.First());
-			DirectoryInfo di = new DirectoryInfo(dfi.DirectoryName);
-
-			if (!SyncPathList.Any(sp => sp.DestinationDir.FullName == di.FullName))
-			{
-				DirectoryInfo sd = SyncPathList.First().SourceDir.Parent.Parent.CreateSubdirectory(di.Name);
-
-				SyncPath nsp = new SyncPath(di.Name, sd.FullName, di.FullName);
-				SyncPathList.Add(nsp);
-				Queries.UpdatePathDatabase(DbConnection, nsp);
-			}
-
-			if (SyncPathList.Any(sp => sp.DestinationDir.FullName == di.FullName)) 
-			{
-				SyncPath sp = SyncPathList.First(spl => spl.DestinationDir.FullName == di.FullName);
-				foreach (string sfn in fileNames)
-				{
-					FileInfo fi = new FileInfo(sfn);
-					sp.AddFile(fi);
-				}
-
-				foreach (SyncFile sf in sp.Files)
-				{
-					sf.SetSynced();
-					Queries.UpdateFileDatabase(DbConnection, sp, sf);
-				}
-			}
-
-			RaiseSyncPathChanged();
-		}
+		#region Delete Files
 
 		public void DoDeleteOldFiles()
 		{
@@ -801,14 +814,15 @@ namespace Common
 			foreach (SyncPath sp in SyncPathList)
 			{
 				sp.CheckUpdateSubFolderFiles(false);
-				foreach(SyncFile sf in sp.Files) //.Where(f => f.File.Exists && f.IsSynced && f.SyncDate.HasValue && DateTime.Now.Subtract(f.SyncDate.Value) > TimeSpan.FromDays(14)))
+				foreach (SyncFile sf in sp.Files)
+					//.Where(f => f.File.Exists && f.IsSynced && f.SyncDate.HasValue && DateTime.Now.Subtract(f.SyncDate.Value) > TimeSpan.FromDays(14)))
 				{
 					deletes.Add(sf.File);
 				}
 			}
 
 			BackgroundWorker worker = new BackgroundWorker();
-			worker.DoWork += (sender, args) => ((List<FileInfo>)args.Argument).ForEach(DeleteFile);
+			worker.DoWork += (sender, args) => ((List<FileInfo>) args.Argument).ForEach(DeleteFile);
 			worker.RunWorkerAsync(deletes);
 		}
 
@@ -826,9 +840,13 @@ namespace Common
 			finally
 			{
 				fi.Refresh();
-				Trace.WriteLine(fi.Exists ? string.Format("Delete Failed: {0}", fi.Name) : string.Format("Successfully Deleted: {0}", fi.Name));
+				Trace.WriteLine(fi.Exists
+					? string.Format("Delete Failed: {0}", fi.Name)
+					: string.Format("Successfully Deleted: {0}", fi.Name));
 			}
 		}
+
+		#endregion
 	}
 
 	public static class Extensions

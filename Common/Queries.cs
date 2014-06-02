@@ -18,8 +18,8 @@ namespace Common
 
 		public const string Insert_Path = "INSERT INTO TBL_SYNCPATH(ID, NAME, SOURCEPATH, DESTINATIONPATH, ERROR)	VALUES(@id, @name, @sourcepath, @destinationpath, @error)";
 
-		public const string Path_Update1 = "UPDATE TBL_SYNCPATH SET ERROR = @error WHERE ID = @id";
-		public const string Path_Update2 = "UPDATE TBL_SYNCPATH SET NAME = @name, SOURCEPATH = @sourcepath, DESTINATIONPATH = @destinationpath, ERROR = @error, TvDbID = @tvdb  WHERE ID = @id";
+		public const string Path_UpdateError = "UPDATE TBL_SYNCPATH SET ERROR = @error WHERE ID = @id";
+		public const string Path_Update = "UPDATE TBL_SYNCPATH SET NAME = @name, SOURCEPATH = @sourcepath, DESTINATIONPATH = @destinationpath, ERROR = @error, TvDbID = @tvdb  WHERE ID = @id";
 
 		public const string Select_FilesForPath = "SELECT f.ID, f.FILENAME, f.SYNCDATE, f.FILEDATE, f.ISSYNCED, f.ISWATCHED, f.WATCHDATE, f.ISMISSING, f.SEASON, f.EPISODE FROM TBL_SYNCDATA f WHERE f.SYNCPATHID = @pathid";
 
@@ -126,7 +126,7 @@ namespace Common
 			try
 			{
 				if (SyncPath_ExistInDb(conn, sp))
-					return SyncPath_Update2(conn, sp);
+					return SyncPath_Update(conn, sp);
 
 				return SyncPath_Insert(conn, sp);
 			}
@@ -177,14 +177,14 @@ namespace Common
 			}
 		}
 
-		public static bool SyncPath_Update1(SQLiteConnection conn, SyncPath sp)
+		public static bool SyncPath_UpdateError(SQLiteConnection conn, SyncPath sp)
 		{
 			try
 			{
 				using (SQLiteConnection c = new SQLiteConnection(conn.ConnectionString))
 				{
 					c.Open();
-					using (SQLiteCommand cmd = new SQLiteCommand(Path_Update1, c))
+					using (SQLiteCommand cmd = new SQLiteCommand(Path_UpdateError, c))
 					{
 						cmd.Parameters.AddWithValue(Param_PathID, sp.ID);
 						cmd.Parameters.AddWithValue(Param_PathError, sp.Error);
@@ -199,14 +199,14 @@ namespace Common
 			}
 		}		
 
-		public static bool SyncPath_Update2(SQLiteConnection conn, SyncPath sp)
+		public static bool SyncPath_Update(SQLiteConnection conn, SyncPath sp)
 		{
 			try
 			{
 				using (SQLiteConnection c = new SQLiteConnection(conn.ConnectionString))
 				{
 					c.Open();
-					using (SQLiteCommand cmd = new SQLiteCommand(Path_Update2, c))
+					using (SQLiteCommand cmd = new SQLiteCommand(Path_Update, c))
 					{
 						cmd.Parameters.AddWithValue(Param_PathID, sp.ID);
 						cmd.Parameters.AddWithValue(Param_PathName, sp.Name);
