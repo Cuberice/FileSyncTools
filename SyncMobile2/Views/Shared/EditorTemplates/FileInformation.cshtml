@@ -1,6 +1,7 @@
 ﻿@using SyncMobile.Utils
+@using SyncMobile2.Utils
 @model SyncMobile.Models.FileInformation
-
+           
 <li>
     <div>
         <div class='ui-grid-a'>
@@ -12,21 +13,25 @@
                 @Html.HiddenFor(m => m.AllowIsSyncEdit)
                 @Html.HiddenFor(m => m.AllowIsWatchedEdit)
                 @Html.HiddenFor(m => m.Error)
-                @Html.HiddenFor(m => m.IsMissing, new { @class = "IsMissing" })
+                @Html.HiddenFor(m => m.IsMissing, new { @class = "is-missing" })
             </div>
 
             <div class='ui-block-b'>
                 <div class="check-inline">
-
                     @Html.LabelFor(model => model.IsWatched)
-                    @Html.CheckBoxFor(model => model.IsWatched, "b", m => m.AllowIsWatchedEdit)
+                    @Html.CheckBoxFor(model => model.IsWatched, "b", m => m.AllowIsWatchedEdit, new { @class = "watch-button" })
                 </div>
                 <div class="check-inline">
 
                     @Html.LabelFor(model => model.IsSynced)
-                    @Html.CheckBoxFor(model => model.IsSynced, "b", m => m.AllowIsSyncEdit)      @*When Disabled always returns False *@
+                    @Html.CheckBoxFor(model => model.IsSynced, "b", m => m.AllowIsSyncEdit, new { @class = "sync-button" })      @*When Disabled always returns False *@
                 </div>
             </div>
         </div>
     </div>
 </li>
+
+@section scripts
+{
+    
+}

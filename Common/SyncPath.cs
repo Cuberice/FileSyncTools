@@ -119,7 +119,7 @@ namespace Common
 		
 		#region Date Helpers
 
-		public DateTime? LastSyncDate { get { return Files.Any(f => f.SyncDate.HasValue) ? Files.Where(f => f.IsSynced).OrderByDescending(f => f.SyncDate).First().SyncDate : null; } }
+		public DateTime? LastSyncDate { get { return Files.Any(f => f.IsSynced && f.SyncDate.HasValue) ? Files.Where(f => f.IsSynced).OrderByDescending(f => f.SyncDate).First().SyncDate : null; } }
 		public DateTime? LastFileDate { get { return Files.Any(f => f.FileDate.HasValue) ? Files.OrderByDescending(f => f.FileDate).First().FileDate : null; } }
 		public DateTime? LastWatchDate { get { return Files.Any(f => f.WatchDate.HasValue) ? Files.Where(f => f.IsWatched).OrderByDescending(f => f.WatchDate).First().SyncDate : null; } }
 		public bool IsRecentlyWatched { get { return LastWatchDate.HasValue && DateTime.Now.Subtract(LastWatchDate.Value) < TimeSpan.FromDays(14); }}

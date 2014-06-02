@@ -14,6 +14,7 @@ namespace SyncMobile.Models
 		public bool IsPath { get; set; }
 
 		[Required]
+		[Display(Name = "Path Name: ")]
 		public string PathName { get; set; }
 		public int PathFileCount { get; set; }
 

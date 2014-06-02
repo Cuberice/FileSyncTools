@@ -9,7 +9,8 @@ namespace SyncMobile2
 		public static void RegisterBundles(BundleCollection bundles)
 		{
 			bundles.Add(new ScriptBundle("~/bundles/jquery")
-				.Include("~/Scripts/jquery-{version}.js"));
+				.Include("~/Scripts/jquery-2.1.1.js", 
+								 "~/Scripts/jquery.unobtrusive-ajax.min.js"));
 
 			bundles.Add(new ScriptBundle("~/bundles/jquerymobile")
 				.Include("~/Scripts/jquery.mobile*"));
@@ -28,7 +29,7 @@ namespace SyncMobile2
 
 			bundles.Add(new StyleBundle("~/Content/css")
 				.Include("~/Content/bootstrap.css",
-							 	 "~/Content/site.css",
+							 	 "~/Content/Site.css",
 								 "~/Content/MyCSS.css"));
 
 			bundles.Add(new StyleBundle("~/Content/mobilecss")

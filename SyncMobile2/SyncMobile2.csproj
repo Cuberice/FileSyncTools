@@ -362,6 +362,8 @@
     <Content Include="Scripts\jquery-2.1.1.min.js" />
     <Content Include="Scripts\jquery.mobile-1.4.2.js" />
     <Content Include="Scripts\jquery.mobile-1.4.2.min.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\modernizr-2.7.2.js" />
     <Content Include="Scripts\MyScripts.js" />
     <Content Include="Scripts\respond.js" />
@@ -380,10 +382,9 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Scripts\jquery-2.1.1.min.map" />
     <Content Include="Scripts\jquery.mobile-1.4.2.min.map" />
-    <Content Include="Views\Home\_Test2Partial.cshtml" />
-    <Content Include="Views\Home\_TestPartial.cshtml" />
+    <Content Include="Views\Shared\_TestPartial.cshtml" />
     <Content Include="Views\Home\AllFiles.cshtml" />
-    <Content Include="Views\Home\EditItem.cshtml" />
+    <Content Include="Views\Home\ShowEditItem.cshtml" />
     <Content Include="Views\Home\ErrorFiles.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\NotSynced.cshtml" />
@@ -395,6 +396,7 @@
     <Content Include="Views\Shared\EditorTemplates\SyncInformation.cshtml" />
     <Content Include="Views\Home\Partials\BasicNavBar.cshtml" />
     <Content Include="Views\Home\Partials\AdditionalNavBar.cshtml" />
+    <Content Include="Views\Shared\_EditItem.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

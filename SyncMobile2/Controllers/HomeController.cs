@@ -145,13 +145,12 @@ namespace SyncMobile.Controllers
 			return View();
 		}
 
-		public ActionResult EditItem(string FileGUID)
+		public PartialViewResult ShowEditItem(string guid, int season, int episode, bool ismissing )
 		{
-			return View();
-		}		
+			return PartialView("_EditItem", new SyncInformation(){FileGUID = guid, Season = season, Episode = episode, IsMissing = ismissing});
+		}	
+	
 		
-
-
 		#endregion
 
 		#region HttpPost
@@ -188,6 +187,12 @@ namespace SyncMobile.Controllers
 		{
 			SubmitData(syncInformations);
 			return RedirectToAction("ErrorFiles");
+		}
+
+		[HttpPost]
+		public void WatchItem(string id, bool value)
+		{
+			
 		}
 
 		#endregion
@@ -312,27 +317,15 @@ namespace SyncMobile.Controllers
 		#region Test
 		public ActionResult Test()
 		{
-			SyncInformation s = new SyncInformation();
-			s.FileGUID = "TestGuid";
-			s.IsPath = true;
-			s.PathName = "Test";
+			SyncInformation s = new SyncInformation {FileGUID = "TestGuid", IsPath = true, PathName = "Test"};
 
 			return View(s);
 		}
 
-		public PartialViewResult _TestPartial()
+		public PartialViewResult TestAction(string fileguid)
 		{
-			SyncInformation s = new SyncInformation();
-			s.FileGUID = "PartialGuid";
-			s.IsPath = true;
-			s.PathName = "Partial";
+			SyncInformation s = new SyncInformation {FileGUID = "PartialGuid", IsPath = true, PathName = "Partial"};
 			return PartialView("_TestPartial", s);
-		}
-
-		public PartialViewResult _Test2Partial()
-		{
-			SyncInformation s = new SyncInformation();
-			return PartialView("_Test2Partial", s);
 		}
 
 		#endregion

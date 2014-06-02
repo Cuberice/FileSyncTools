@@ -1,7 +1,10 @@
 ﻿@model SyncMobile.Models.SyncGroup
 
 
-@using (Html.BeginForm("NotSynced", "Home", FormMethod.Post, new { @id = "editSettings" }))
+@using (Ajax.BeginForm("TestAction", "Home", new AjaxOptions()
+                                            {
+                                                HttpMethod = "POST"
+                                            }))
 {
     <input value="Submit" type="submit">
     <div>

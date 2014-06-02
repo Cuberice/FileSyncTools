@@ -136,17 +136,17 @@ namespace SyncMobile.Utils
 			return new MvcHtmlString(string.Format("<li class='center' data-role='list-divider'>{0}<span class='ui-li-count'>{1}</span></li>", fname(helper.ViewData.Model), ffilecount(helper.ViewData.Model)));
 		}
 
-		public static MvcHtmlString CheckBoxLableFor<TModel>(this HtmlHelper<TModel> helper, Expression<Func<TModel, bool>> f, string theme, bool enabled)
+		public static MvcHtmlString CheckBoxLableFor<TModel>(this HtmlHelper<TModel> helper, Expression<Func<TModel, bool>> f, string theme, bool enabled, object htmlattributes)
 		{
-			return new MvcHtmlString(helper.LabelFor(f) + helper.CheckBoxFor(f, "b", true).ToString());
+			return new MvcHtmlString(helper.LabelFor(f) + helper.CheckBoxFor(f, "b", true, htmlattributes).ToString());
 		}
-		public static MvcHtmlString CheckBoxFor<TModel>(this HtmlHelper<TModel> helper, Expression<Func<TModel, bool>> f, string theme, Func<TModel, bool> ef)
+		public static MvcHtmlString CheckBoxFor<TModel>(this HtmlHelper<TModel> helper, Expression<Func<TModel, bool>> f, string theme, Func<TModel, bool> ef, object htmlattributes)
 		{
-			return helper.CheckBoxFor(f, theme, ef(helper.ViewData.Model));
+			return helper.CheckBoxFor(f, theme, ef(helper.ViewData.Model), htmlattributes);
 		}
-		public static MvcHtmlString CheckBoxFor<TModel>(this HtmlHelper<TModel> helper, Expression<Func<TModel, bool>> f, string theme, bool enabled)
+		public static MvcHtmlString CheckBoxFor<TModel>(this HtmlHelper<TModel> helper, Expression<Func<TModel, bool>> f, string theme, bool enabled, object htmlattributes)
 		{
-			string str = string.Format(helper.CheckBoxFor(f).ToString().Replace("type=\"checkbox\"", "type=\"checkbox\" data-theme='{0}' {1}"), 
+			string str = string.Format(helper.CheckBoxFor(f, htmlattributes).ToString().Replace("type=\"checkbox\"", "type=\"checkbox\" data-theme='{0}' {1}"), 
 				string.IsNullOrEmpty(theme) ? "a" : theme,
 				enabled ? string.Empty : "disabled=''");
 
@@ -178,15 +178,23 @@ namespace SyncMobile.Utils
 		{
 			return CreateActionLink(helper, options, string.Format("{0} {1} {2} ", JQuery.DataInline, mini ? JQuery.DataMini : "",  options.Icon ));
 		}		
-		public static MvcHtmlString InlineButton<TModel>(this HtmlHelper<TModel> helper, Options options, bool iconOnly, bool mini)
+		public static MvcHtmlString InlineButton<TModel>(this HtmlHelper<TModel> helper, Options options)
 		{
 			return CreateActionLink(helper, options, 
 				string.Format("{0} {1} {2} {3}", 
 				JQuery.DataInline, 
-				mini ? JQuery.DataMini : "", 
+				JQuery.DataMini, 
 				options.Icon,
-				iconOnly ? JQuery.DataIconPositionNoText : ""));
+				options.IconOnly ? JQuery.DataIconPositionNoText : ""));
 		}
+
+		public static MvcHtmlString NumberBoxFor<TModel>(this HtmlHelper<TModel> helper, Func<TModel, string> f)
+		{
+			string result = f(helper.ViewData.Model);
+			string input = string.Format("<input type=\"number\">{0}</input>", result);
+
+			return new MvcHtmlString(input);
+		}	
 		
 		public static class JQuery
 		{
@@ -255,7 +263,9 @@ namespace SyncMobile.Utils
 		public string Controller;
 		public string Action;
 		public string Text;
+		
 		public string Icon;
+		public bool IconOnly;
 	}
 	public static class Icons
 	{
