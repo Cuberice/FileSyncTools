@@ -2,17 +2,15 @@
 @model SyncMobile.Models.PathGroup
 
 
-@using (Html.BeginForm("Index", "Home", FormMethod.Post, new { @id = "editSettings" }))
+@using (Html.BeginForm("Index", "Home"))
 {
-    <input value="Submit" type="submit">
     <div data-role="collapsible-set">
         <div data-filter="true">
-            <ul data-role="listview" data-inset="true">
+            <ul data-role="listview" data-inset="true" data-split-theme="b" data-count-theme="a">
                 @Html.EditorFor(m => m.PathInformations)
             </ul>
         </div>
      </div>
-   
 }
 
 

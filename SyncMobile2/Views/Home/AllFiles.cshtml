@@ -6,11 +6,10 @@
 }
 
 
-
 @using (Html.BeginForm("AllFiles", "Home"))
 {
     <div data-role="collapsible-set">
-        <ul data-role="listview"  data-inset="true">        @*class="ui-body-a"*@
+        <ul data-role="listview" data-inset="true" data-split-theme="b">
             @Html.EditorFor(m => m.PathInformations)
         </ul>
     </div>

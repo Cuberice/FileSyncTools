@@ -637,6 +637,12 @@ namespace Common
 			});
 		}
 
+		public static void SubmitFilesWatch(string id, bool value)
+		{
+			SQLiteConnection conn = GetDataConnection();
+			Queries.SyncFiles_UpdateWatch(conn, new SyncFile(id, value));
+		}
+
 		#endregion
 
 		#region Get Web View Data

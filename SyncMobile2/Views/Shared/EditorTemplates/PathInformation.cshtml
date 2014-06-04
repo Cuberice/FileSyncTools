@@ -1,11 +1,15 @@
 ﻿@using SyncMobile.Utils
 @model SyncMobile.Models.PathInformation
            
-<li data-role="collapsible" data-iconpos="left" data-inset="false" data-mini="true" >
-        @Html.HeaderBubbleFor(m => m.PathName, 4, m => m.PathFileCount.ToString())
-        @Html.HiddenFor(m => m.PathName)
+<li data-role="collapsible" data-iconpos="left" data-inset="true" data-theme="a">
+    <h6>
+        Header
+@*        <span class="ui-li-count">1</span>*@
+    </h6>
 
-    <ul data-role="listview" data-theme="a">
+    @Html.HiddenFor(m => m.PathName)
+
+    <ul data-role="listview">
         @Html.EditorFor(m => m.FileInformations)
     </ul>
 </li>

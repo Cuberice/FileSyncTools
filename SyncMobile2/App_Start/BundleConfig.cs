@@ -28,12 +28,14 @@ namespace SyncMobile2
 								 "~/Scripts/respond.js"));
 
 			bundles.Add(new StyleBundle("~/Content/css")
-				.Include("~/Content/bootstrap.css",
+				.Include(
+//				"~/Content/bootstrap.css",
 							 	 "~/Content/Site.css",
 								 "~/Content/MyCSS.css"));
 
 			bundles.Add(new StyleBundle("~/Content/mobilecss")
-				.Include("~/Content/jquery.mobile*"));
+				.Include("~/Content/jquery.mobile*",
+								 "~/Content/SyncMobileTheme.css"));
 
 			bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
 									"~/Content/themes/base/jquery.ui.core.css",

@@ -598,6 +598,17 @@ namespace Common
 			IsSynced = isSynced; //Dependent on AllowIsSyncEdit - otherwize view returns false for checkbox
 			Season = season;
 			Episode = episode;
+		}		
+		
+		//Used with Update Watch Ajax Call
+		public SyncFile(string guid, bool iswatched)
+		{
+			if(guid == null)
+				return;
+
+			ID = Guid.Parse(guid);
+			IsWatched = iswatched;
+			WatchDate = iswatched ? DateTime.Now : (DateTime?)null;
 		}
 
 		//Used with Adding new Files

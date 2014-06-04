@@ -10,12 +10,11 @@ namespace SyncMobile.Models
 	{
 		public IList<SyncInformation> SyncInformations { get; set; }
 
-		public void SetAllowEdit(bool allowSync, bool allowWatch)
+		public void AllowEditWatch()
 		{
 			SyncInformations.ForEach(si =>
 			{
-				si.AllowIsSyncEdit = allowSync;
-				si.AllowIsWatchedEdit = allowWatch;
+				si.AllowIsWatchedEdit = true;
 			});
 		}
 	}

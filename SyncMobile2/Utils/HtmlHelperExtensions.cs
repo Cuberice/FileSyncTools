@@ -122,7 +122,8 @@ namespace SyncMobile.Utils
 			Func<TModel, TProperty> deleg = f.Compile();
 			TProperty result = deleg(helper.ViewData.Model);
 
-			return new MvcHtmlString(string.Format("<h{1}>{2}{0}</h{1}>", result, headervalue, string.Format("<div class=\"ui-btn-up-a ui-btn-corner-all custom-count-pos\">{0}</div>", fbubblevalue(helper.ViewData.Model))));
+//			return new MvcHtmlString(string.Format("<h{1}>{2}{0}</h{1}>", result, headervalue, string.Format("<div class=\"ui-btn ui-btn-b ui-btn-corner-all custom-count-pos\"><p style=\"color:red;font-size:20px;margin:0;padding 0 0\">{0}</p></div>", fbubblevalue(helper.ViewData.Model))));
+			return new MvcHtmlString(string.Format("<h{1}>{2}{0}</h{1}>", result, headervalue, string.Format("<div class=\"ui-btn ui-btn-b ui-btn-corner-all custom-count-pos\"><span class=\"ui-li-count ui-body-a\">1</span></div>", fbubblevalue(helper.ViewData.Model))));
 		}		
 		
 		public static MvcHtmlString ParagraphFor<TModel>(this HtmlHelper<TModel> helper, Func<TModel, string> f)
@@ -281,5 +282,13 @@ namespace SyncMobile.Utils
 		public const string Info = "data-icon=\"info\"";
 		public const string Home = "data-icon=\"home\"";
 		public const string Grid = "data-icon=\"grid\"";
+	}
+
+	public static class Swatches
+	{
+		public static string Missing = "a";
+		public static string Normal = "b";
+		public static string Watched = "c";
+		public static string Error = "d";
 	}
 }

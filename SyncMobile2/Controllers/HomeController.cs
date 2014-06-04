@@ -22,26 +22,7 @@ namespace SyncMobile.Controllers
 			return RedirectToAction("Index");
 		}
 
-		public ActionResult NotSynced()
-		{
-			ViewBag.Title = "Not Synchronized";
-			ViewBag.Message = "All Files not yet Synchronized groupd by Directory";
-
-			List<SyncPath> col;
-			try
-			{
-				col = SyncUtils.View_GetNotSyncedCollection();
-			}
-			catch
-			{
-				return RedirectToAction("Error");
-			}
-
-			SyncGroup sg = new SyncGroup {SyncInformations = GetInformationModelData(col).ToList()};
-			sg.SetAllowEdit(true, false);
-			return View(sg);
-		}		
-		
+		//SyncGroup & SyncInformation - Paths are simple seperated by ListSeperator
 		public ActionResult Synced()
 		{
 			ViewBag.Title = "Synchronized";
@@ -58,10 +39,50 @@ namespace SyncMobile.Controllers
 			}
 
 			SyncGroup sg = new SyncGroup {SyncInformations = GetInformationModelData(col).ToList()};
-			sg.SetAllowEdit(false, true);
+			sg.AllowEditWatch();
 			return View(sg);
 		}
 
+		public ActionResult NotSynced()
+		{
+			ViewBag.Title = "Not Synchronized";
+			ViewBag.Message = "All Files not yet Synchronized groupd by Directory";
+
+			List<SyncPath> col;
+			try
+			{
+				col = SyncUtils.View_GetNotSyncedCollection();
+			}
+			catch
+			{
+				return RedirectToAction("Error");
+			}
+
+			SyncGroup sg = new SyncGroup { SyncInformations = GetInformationModelData(col).ToList() };
+			return View(sg);
+		}
+
+		public ActionResult ErrorFiles()
+		{
+			ViewBag.Title = "Errors";
+			ViewBag.Message = "Files with Copy Error, Display Error or Not Downloaded";
+			List<SyncPath> col = new List<SyncPath>();
+
+			try
+			{
+				col = SyncUtils.View_GetErrorCollection();
+			}
+			catch
+			{
+				return RedirectToAction("Error");
+			}
+
+			SyncGroup sg = new SyncGroup { SyncInformations = GetInformationModelData(col).ToList() };
+			sg.AllowEditWatch();
+			return View(sg);
+		}
+
+		//PathGroup & PathInformation - Collapsable Container for each Path 
 		public ActionResult Index()
 		{
 			ViewBag.Title = "What to Whatch Next";
@@ -78,8 +99,8 @@ namespace SyncMobile.Controllers
 			PathGroup sg = new PathGroup { PathInformations = GetPathModelData(col).ToList() };
 			sg.SetAllowEdit(false, true);
 			return View(sg);
-		}		
-		
+		}
+
 		public ActionResult NotWatched()
 		{
 			ViewBag.Title = "New Synchronized Files by Date";
@@ -118,38 +139,17 @@ namespace SyncMobile.Controllers
 			return View(sg);
 		}
 		
-		public ActionResult ErrorFiles()
-		{
-			ViewBag.Title = "Errors";
-			ViewBag.Message = "Files with Copy Error, Display Error or Not Downloaded";
-			List<SyncPath> col = new List<SyncPath>();
-
-			try
-			{
-				col = SyncUtils.View_GetErrorCollection();
-			}
-			catch
-			{
-				return RedirectToAction("Error");
-			}
-			
-			SyncGroup sg = new SyncGroup {SyncInformations = GetInformationModelData(col).ToList()};
-			sg.SetAllowEdit(true, false);
-
-			return View(sg);
-		}
-
 		public ActionResult Error()
 		{
 			ViewBag.ErrorMessage = "Failed "+ SyncUtils.GetDataConnectionString();
 			return View();
 		}
 
+		//Partials
 		public PartialViewResult ShowEditItem(string guid, int season, int episode, bool ismissing )
 		{
 			return PartialView("_EditItem", new SyncInformation(){FileGUID = guid, Season = season, Episode = episode, IsMissing = ismissing});
 		}	
-	
 		
 		#endregion
 
@@ -192,7 +192,8 @@ namespace SyncMobile.Controllers
 		[HttpPost]
 		public void WatchItem(string id, bool value)
 		{
-			
+			if (true)
+				SyncUtils.SubmitFilesWatch(id, value);
 		}
 
 		#endregion

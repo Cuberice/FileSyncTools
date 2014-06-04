@@ -7,14 +7,13 @@
 
 
 
-@using (Html.BeginForm("ErrorFiles", "Home", FormMethod.Post, new { @id = "editSettings" }))
+@using (Html.BeginForm("ErrorFiles", "Home"))
 {
-    <input value="Submit" type="submit">
     <div>
         <ul data-role="listview" class="ui-body-a" data-split-theme="b" data-count-theme="a" data-inset="true">
             @Html.EditorFor(m => m.SyncInformations)
         </ul>
     </div>
-    }
+}
 
     

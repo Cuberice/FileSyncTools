@@ -2,8 +2,8 @@
 @using SyncMobile2.Utils
 @model SyncMobile.Models.FileInformation
            
-<li>
-    <div>
+<li id="@Model.FileGUID" class="ItemLi" data-theme="b">
+    <a href="#" class="ItemAnchor">
         <div class='ui-grid-a'>
             <div class='ui-block-a'>
                 @Html.HeaderFor(m => m.FileName, 4)
@@ -12,26 +12,29 @@
                 @Html.HiddenFor(m => m.FileGUID)
                 @Html.HiddenFor(m => m.AllowIsSyncEdit)
                 @Html.HiddenFor(m => m.AllowIsWatchedEdit)
-                @Html.HiddenFor(m => m.Error)
+                @Html.HiddenFor(m => m.Error, new { @class = "is-error" })
                 @Html.HiddenFor(m => m.IsMissing, new { @class = "is-missing" })
+                @Html.HiddenFor(m => m.IsSynced, new { @class = "is-synced" })
+                @Html.HiddenFor(m => m.IsWatched, new { @class = "is-watched" })
+                <div id="DataDiv">
+
+                </div>
             </div>
 
             <div class='ui-block-b'>
                 <div class="check-inline">
                     @Html.LabelFor(model => model.IsWatched)
-                    @Html.CheckBoxFor(model => model.IsWatched, "b", m => m.AllowIsWatchedEdit, new { @class = "watch-button" })
-                </div>
-                <div class="check-inline">
-
-                    @Html.LabelFor(model => model.IsSynced)
-                    @Html.CheckBoxFor(model => model.IsSynced, "b", m => m.AllowIsSyncEdit, new { @class = "sync-button" })      @*When Disabled always returns False *@
+                    @Html.CheckBoxFor(model => model.IsWatched, Swatches.Normal, m => m.AllowIsWatchedEdit, new { @class = "watch-button" })
                 </div>
             </div>
         </div>
-    </div>
-</li>
+    </a>
 
-@section scripts
-{
-    
-}
+    @Ajax.ActionLink("Edit", "ShowEditItem", "Home", new { @class = "EditButton", guid = @Model.FileGUID, season = @Model.Season, episode = @Model.Episode, ismissing = @Model.IsMissing },
+        new AjaxOptions()
+        {
+            HttpMethod = "GET",
+            InsertionMode = InsertionMode.Replace,
+            UpdateTargetId = "DataDiv"
+        })
+</li>

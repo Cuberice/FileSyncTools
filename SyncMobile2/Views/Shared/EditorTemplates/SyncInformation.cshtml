@@ -8,8 +8,8 @@
     @Html.PathListViewFor(m => m.PathName, m => m.PathFileCount)
 }
 
-<li id="@Model.FileGUID" data-theme="b">
-    <a href="#">
+<li id="@Model.FileGUID" class="ItemLi" data-theme="b">
+    <a href="#" class="ItemAnchor">
         <div class='ui-grid-a'>
             <div class='ui-block-a'>
                 @Html.HeaderFor(m => m.FileName, 4)
@@ -18,9 +18,10 @@
                 @Html.HiddenFor(m => m.FileGUID)
                 @Html.HiddenFor(m => m.AllowIsSyncEdit)
                 @Html.HiddenFor(m => m.AllowIsWatchedEdit)
-                @Html.HiddenFor(m => m.Error)
-                @Html.HiddenFor(m => m.IsMissing)
-                @Html.HiddenFor(m => m.IsSynced, new { @class = "is-missing" })
+                @Html.HiddenFor(m => m.Error, new { @class = "is-error" })
+                @Html.HiddenFor(m => m.IsMissing, new { @class = "is-missing" })
+                @Html.HiddenFor(m => m.IsSynced, new { @class = "is-synced" })
+                @Html.HiddenFor(m => m.IsWatched, new { @class = "is-watched" })
 
                 <div id="DataDiv">
 
@@ -30,7 +31,7 @@
             <div class='ui-block-b'>
                 <div class="check-inline" style="margin-right: 30px">
                     @Html.LabelFor(model => model.IsWatched)
-                    @Html.CheckBoxFor(model => model.IsWatched, "b", m => m.AllowIsWatchedEdit, new { @class = "watch-button" })
+                    @Html.CheckBoxFor(model => model.IsWatched, Swatches.Normal, m => m.AllowIsWatchedEdit, new { @class = "watch-button" })
                 </div>
             </div>
         </div>
