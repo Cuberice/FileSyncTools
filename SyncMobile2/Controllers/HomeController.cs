@@ -148,7 +148,7 @@ namespace SyncMobile.Controllers
 		//Partials
 		public PartialViewResult ShowEditItem(string guid, int season, int episode, bool ismissing )
 		{
-			return PartialView("_EditItem", new SyncInformation(){FileGUID = guid, Season = season, Episode = episode, IsMissing = ismissing});
+			return PartialView("~/Views/Home/Partials/_EditItem.cshtml", new SyncInformation() { FileGUID = guid, Season = season, Episode = episode, IsMissing = ismissing });
 		}	
 		
 		#endregion
@@ -194,6 +194,12 @@ namespace SyncMobile.Controllers
 		{
 			if (true)
 				SyncUtils.SubmitFilesWatch(id, value);
+		}		
+		
+		[HttpPost]
+		public void UpdateItem(string id, string season, string episode, bool issynced, bool ismissing)
+		{
+			
 		}
 
 		#endregion

@@ -387,7 +387,6 @@
     <Content Include="Scripts\jquery.mobile-1.4.2.min.map" />
     <Content Include="Views\Shared\_TestPartial.cshtml" />
     <Content Include="Views\Home\AllFiles.cshtml" />
-    <Content Include="Views\Home\ShowEditItem.cshtml" />
     <Content Include="Views\Home\ErrorFiles.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\NotSynced.cshtml" />
@@ -399,7 +398,7 @@
     <Content Include="Views\Shared\EditorTemplates\SyncInformation.cshtml" />
     <Content Include="Views\Home\Partials\BasicNavBar.cshtml" />
     <Content Include="Views\Home\Partials\AdditionalNavBar.cshtml" />
-    <Content Include="Views\Shared\_EditItem.cshtml" />
+    <Content Include="Views\Home\Partials\_EditItem.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

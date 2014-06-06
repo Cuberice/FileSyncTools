@@ -56,29 +56,6 @@ input[type="checkbox"].input-validation-error {
     text-shadow: none;
 }
 
-.center {
-text-align: center;
-}
-
-.alignright {
-	align-items: stretch;
-}
-
-.check-inline {
-	display: inline;
-	float: right;
-}
-
-.check-inline-padded {
-	display: inline;
-	float: right;
-}
-
-.check-inline-left {
-	display: inline;
-	float: left;
-}
-
 
 /*JQuery Collapsable Container*/
 .ui-li-static.ui-collapsible > .ui-collapsible-heading {

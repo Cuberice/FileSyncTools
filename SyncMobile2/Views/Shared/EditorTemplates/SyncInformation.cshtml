@@ -10,35 +10,37 @@
 
 <li id="@Model.FileGUID" class="ItemLi" data-theme="b">
     <a href="#" class="ItemAnchor">
-        <div class='ui-grid-a'>
-            <div class='ui-block-a'>
-                @Html.HeaderFor(m => m.FileName, 4)
-                @Html.ParagraphFor(m => "Season: " + m.Season + " - Ep: " + m.Episode)
-
-                @Html.HiddenFor(m => m.FileGUID)
-                @Html.HiddenFor(m => m.AllowIsSyncEdit)
-                @Html.HiddenFor(m => m.AllowIsWatchedEdit)
-                @Html.HiddenFor(m => m.Error, new { @class = "is-error" })
-                @Html.HiddenFor(m => m.IsMissing, new { @class = "is-missing" })
-                @Html.HiddenFor(m => m.IsSynced, new { @class = "is-synced" })
-                @Html.HiddenFor(m => m.IsWatched, new { @class = "is-watched" })
-
-                <div id="DataDiv">
-
-                </div>
-            </div>
-
-            <div class='ui-block-b'>
-                <div class="check-inline" style="margin-right: 30px">
-                    @Html.LabelFor(model => model.IsWatched)
-                    @Html.CheckBoxFor(model => model.IsWatched, Swatches.Normal, m => m.AllowIsWatchedEdit, new { @class = "watch-button" })
-                </div>
-            </div>
+        <div class="inline-right" style="margin-right: 5px">
+            @Html.LabelFor(model => model.IsWatched)
+            @Html.CheckBoxFor(model => model.IsWatched, Swatches.Normal, m => m.AllowIsWatchedEdit, new { @class = "watch-button" })
         </div>
 
+        <div class="inline-left">
+            <span>@Html.HeaderFor(m => m.FileName, 4)</span>
+            @Html.ParagraphFor(m => "Season: " + m.Season + " - Ep: " + m.Episode)
+
+            @Html.HiddenFor(m => m.FileGUID)
+            @Html.HiddenFor(m => m.AllowIsSyncEdit)
+            @Html.HiddenFor(m => m.AllowIsWatchedEdit)
+            @Html.HiddenFor(m => m.Error, new { @class = "is-error" })
+            @Html.HiddenFor(m => m.IsMissing, new { @class = "is-missing" })
+            @Html.HiddenFor(m => m.IsSynced, new { @class = "is-synced" })
+            @Html.HiddenFor(m => m.IsWatched, new { @class = "is-watched" })
+
+        </div>
+            
+        <div id="DataDiv" style="clear:both" class="DataDivClass">
+        </div>
     </a>
 
-    @Ajax.ActionLink("Edit", "ShowEditItem", "Home", new { @class = "EditButton", guid = @Model.FileGUID, season = @Model.Season, episode = @Model.Episode, ismissing = @Model.IsMissing },
+    @Ajax.ActionLink("Edit", "ShowEditItem", "Home", 
+    new {
+           @class = "EditButton", 
+           guid = @Model.FileGUID, 
+           season = @Model.Season, 
+           episode = @Model.Episode, 
+           ismissing = @Model.IsMissing
+         },
         new AjaxOptions()
         {
             HttpMethod = "GET",

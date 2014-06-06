@@ -33,9 +33,13 @@ namespace SyncMobile.Models
 		public int Season { get; set; }
 		public int Episode { get; set; }
 
+		[DefaultValue(true)]
 		public bool AllowIsSyncEdit { get; set; }
 
-		[DefaultValue(false)]
+		[DefaultValue(true)]
 		public bool AllowIsWatchedEdit { get; set; }
+	
+		[DefaultValue(true)]
+		public bool AllowIsMissingEdit { get; set; }
 	}
 }

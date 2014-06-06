@@ -2,11 +2,12 @@
 @model SyncMobile.Models.PathInformation
            
 <li data-role="collapsible" data-iconpos="left" data-inset="true" data-theme="a">
-    <h6>
-        Header
-@*        <span class="ui-li-count">1</span>*@
-    </h6>
-
+    @Html.HeaderFor(m => m.PathName, 6)
+    @*    <h6>*@
+    @*        Header*@
+    @*        <span class="ui-li-count">1</span>*@
+    @*    </h6>*@
+    
     @Html.HiddenFor(m => m.PathName)
 
     <ul data-role="listview">

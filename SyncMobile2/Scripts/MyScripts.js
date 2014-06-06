@@ -36,7 +36,9 @@
 
 //    $watch.addClass("ui-disabled");
 //    var watchLi = $watch.parents("li");
-//    var watchId = watchLi.attr("id");
+    //    var watchId = watchLi.attr("id");
+
+
 
     $(".watch-button").click(null, function () {
         $.ajax({

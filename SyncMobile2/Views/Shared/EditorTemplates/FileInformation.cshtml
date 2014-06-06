@@ -22,7 +22,7 @@
             </div>
 
             <div class='ui-block-b'>
-                <div class="check-inline">
+                <div class="inline-right">
                     @Html.LabelFor(model => model.IsWatched)
                     @Html.CheckBoxFor(model => model.IsWatched, Swatches.Normal, m => m.AllowIsWatchedEdit, new { @class = "watch-button" })
                 </div>
@@ -30,7 +30,15 @@
         </div>
     </a>
 
-    @Ajax.ActionLink("Edit", "ShowEditItem", "Home", new { @class = "EditButton", guid = @Model.FileGUID, season = @Model.Season, episode = @Model.Episode, ismissing = @Model.IsMissing },
+    @Ajax.ActionLink("Edit", "ShowEditItem", "Home",
+    new
+    {
+        @class = "EditButton",
+        guid = @Model.FileGUID,
+        season = @Model.Season,
+        episode = @Model.Episode,
+        ismissing = @Model.IsMissing
+    },
         new AjaxOptions()
         {
             HttpMethod = "GET",

@@ -3,7 +3,7 @@
 	padding: 0.1em 0.5em
 }
 
-	a.nav-inline {
+a.nav-inline {
 	display: inline;
 	float: right;
 }
@@ -15,5 +15,23 @@
     float: right;
 		display: inline
 }
-	/*0.1em 0.5em*/
+
+.center {
+	text-align: center;
+}
+
+.inline-right {
+	display: inline;
+	float: right;
+}
+
+.inline-left {
+	display: inline;
+	float: left;
+}
+
+.block-left {
+		display: block;
+		
+}
 
