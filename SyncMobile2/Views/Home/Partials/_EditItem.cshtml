@@ -17,15 +17,17 @@
             @Html.LabelFor(model => model.IsSynced)
             @Html.CheckBoxFor(model => model.IsSynced, Swatches.Normal, true, new { @class = "edit-issynced" })
         </div>
-
         <div class="inline-left" style="margin: 25px 10px 2px 10px">
             @Html.LabelFor(model => model.IsMissing)
             @Html.CheckBoxFor(model => model.IsMissing, Swatches.Normal, true, new { @class = "edit-ismissing" })
+        </div>        
+        <div class="inline-left" style="margin: 25px 10px 2px 10px">
+            <a id="edit-item-delete-@Model.FileGUID" class="edit-item-delete inline-left ui-btn ui-btn-b ui-icon-delete ui-corner-all ui-btn-inline">Delete</a>
         </div>
 
         <div class="inline-left" style="margin: 30px 10px 2px 55px">
-            <a href="#" style="padding:2px" class="edit-item-save inline-left ui-btn ui-icon-check ui-btn-icon-notext ui-corner-all ui-btn-inline">OK</a>
-            <a href="#" style="padding:2px" class="edit-item-cancel inline-left ui-btn ui-icon-delete ui-btn-icon-notext ui-corner-all ui-btn-inline">Cancel</a>
+            <a id="edit-item-save-@Model.FileGUID" style="padding:2px" class="edit-item-save inline-left ui-btn ui-btn-b ui-icon-check ui-btn-icon-notext ui-corner-all ui-btn-inline">Save</a>
+            <a href="#" style="padding:2px" class="edit-item-cancel inline-left ui-btn ui-btn-b ui-icon-delete ui-btn-icon-notext ui-corner-all ui-btn-inline">Cancel</a>
         </div>
     </form>
 </div>
@@ -36,17 +38,17 @@
     
     $().ready(function () {
 
+        $(this).parents("li").trigger('create');
         $(".edit-form").trigger("create");
 
         $(".edit-item-cancel").click(null, function () {
 
-            $(".DataDivClass").empty();
-            return false;
+            $("#partial-div-@Model.FileGUID").empty();
         });
 
-        $(".edit-item-save").click(null, function () {
+        $("#edit-item-save-@Model.FileGUID").click(null, function () {
 
-            var $fm = $(this).parents(".edit-form");
+           var $fm = $(this).parents(".edit-form");
             $.ajax({
                 url: "/Home/UpdateItem",
                 type: 'POST',
@@ -56,10 +58,31 @@
                     episode: $fm.find("#edit-episode").val(),
                     issynced: $fm.find(".edit-issynced").prop("checked"),
                     ismissing: $fm.find(".edit-ismissing").prop("checked")
-                }
+                },
+                success: function () {
+                    $(this).parents("li").trigger('create');
+                },
             });
 
-            $(".DataDivClass").empty();
+            $("#partial-div-@Model.FileGUID").empty();
+            return false;
+        });
+
+        $("#edit-item-delete-@Model.FileGUID").click(null, function () {
+
+            var $fm = $(this).parents(".edit-form");
+            $.ajax({
+                url: "/Home/DeleteItem",
+                type: 'POST',
+                data: {
+                    id: $(this).parents("li").attr("id")
+                },
+                success: function () {
+                    alert("Deleted...");
+                },
+            });
+
+            $("#partial-div-@Model.FileGUID").empty();
             return false;
         });
 

@@ -31,7 +31,8 @@ namespace Common
 
 		public const string Update_FileSync = "UPDATE TBL_SYNCDATA SET ISSYNCED = @issynced, SYNCDATE = @syncdate, ISMISSING = @ismissing, FILENAME = @filename, FILEDATE = @filedate WHERE ID = @id";
 		public const string Update_FileWatch = "UPDATE TBL_SYNCDATA SET ISWATCHED = @iswatched , WATCHDATE = @watchdate WHERE ID = @id";
-		public const string Update_File = "UPDATE TBL_SYNCDATA SET ISWATCHED = @iswatched , WATCHDATE = @watchdate, ISSYNCED = @issynced, SYNCDATE = @syncdate, SEASON = @season, EPISODE = @episode WHERE ID = @id";
+		public const string Update_File = "UPDATE TBL_SYNCDATA SET ISWATCHED = @iswatched , WATCHDATE = @watchdate, ISSYNCED = @issynced, ISMISSING = @ismissing, SYNCDATE = @syncdate, SEASON = @season, EPISODE = @episode WHERE ID = @id";
+		public const string Delete_File = "DELETE FROM TBL_SYNCDATA WHERE ID = @id";
 
 		public const string Select_Settings_All = "SELECT TerraCopyPath, ProcessWaitTime, NotificationTime, NotificationsEnabled, SkipExtensions FROM TBL_SETTINGS";
 
@@ -370,8 +371,23 @@ namespace Common
 					cmd.Parameters.AddWithValue(Param_FileWatchDate, sf.IsWatched ? sf.WatchDate : null );
 					cmd.Parameters.AddWithValue(Param_FileSyncDate, sf.IsSynced ? sf.SyncDate : null);
 					cmd.Parameters.AddWithValue(Param_FileIsSynced, sf.IsSynced);
+					cmd.Parameters.AddWithValue(Param_FileIsMissing, sf.IsMissing);
 					cmd.Parameters.AddWithValue(Param_FileSeason, sf.Season);
 					cmd.Parameters.AddWithValue(Param_FileEpisode, sf.Episode);
+					return cmd.ExecuteNonQuery() > 0;
+				}
+			}
+		}		
+		
+		public static bool SyncFiles_Delete(SQLiteConnection conn, Guid id)
+		{
+			using (SQLiteConnection c = new SQLiteConnection(conn.ConnectionString))
+			{
+				c.Open();
+				using (SQLiteCommand cmd = new SQLiteCommand(Delete_File, c))
+				{
+					cmd.Parameters.AddWithValue(Param_FileID, id);
+					
 					return cmd.ExecuteNonQuery() > 0;
 				}
 			}
@@ -395,7 +411,7 @@ namespace Common
 			}
 		}
 
-		public static bool ExistInDb(SQLiteConnection conn, string command)
+		private static bool ExistInDb(SQLiteConnection conn, string command)
 		{
 			try
 			{
@@ -418,7 +434,7 @@ namespace Common
 			}
 		}
 
-		public static bool ExistInDb(SQLiteConnection conn, SQLiteCommand command)
+		private static bool ExistInDb(SQLiteConnection conn, SQLiteCommand command)
 		{
 			try
 			{
@@ -442,7 +458,7 @@ namespace Common
 			}
 		}			
 		
-		public static object ReadFromDb(SQLiteConnection conn, string command, string value)
+		private static object ReadFromDb(SQLiteConnection conn, string command, string value)
 		{
 			try
 			{
@@ -466,7 +482,7 @@ namespace Common
 			}
 		}		
 		
-		public static string SelectFromDb(SQLiteConnection conn, string command)
+		private static string SelectFromDb(SQLiteConnection conn, string command)
 		{
 			string str = string.Empty;
 			try

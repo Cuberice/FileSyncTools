@@ -291,7 +291,8 @@ namespace Common
 		}
 		public List<SyncFile> GetNotSyncedOrMissingFiles()
 		{
-			return Files.Where(sf => !sf.IsSynced || sf.IsMissing).OrderBy(sf => sf.Season).ThenBy(sf => sf.Episode).ToList();
+			List<SyncFile> f = Files.Where(sf => !sf.IsSynced || sf.IsMissing).ToList();
+			return f.OrderBy(sf => sf.Season).ThenBy(sf => sf.Episode).ToList();
 		}
 		public List<SyncFile> GetWatchFiles()
 		{
@@ -600,15 +601,22 @@ namespace Common
 			Episode = episode;
 		}		
 		
-		//Used with Update Watch Ajax Call
+		//Used with Watch Ajax Call
 		public SyncFile(string guid, bool iswatched)
 		{
-			if(guid == null)
-				return;
-
 			ID = Guid.Parse(guid);
 			IsWatched = iswatched;
 			WatchDate = iswatched ? DateTime.Now : (DateTime?)null;
+		}		
+		
+		//Used with Update Ajax Call
+		public SyncFile(string guid, bool isSynced, bool isMissing, int season, int episode)
+		{
+			ID = Guid.Parse(guid);
+			IsSynced = isSynced;
+			IsMissing = isMissing;
+			Season = season;
+			Episode = episode;
 		}
 
 		//Used with Adding new Files

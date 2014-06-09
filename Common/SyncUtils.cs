@@ -28,7 +28,6 @@ namespace Common
 		{
 			SyncPathList = new List<SyncPath>();
 			DbConnection = GetDataConnection();
-			TestConnection();
 		}
 
 		#region Fields & Properties
@@ -66,6 +65,7 @@ namespace Common
 		public DateTime? LastSyncDate { get { return SyncPathList.Any(p => p.LastSyncDate.HasValue) ? SyncPathList.Select(p => p.LastSyncDate).Where(d => d.HasValue).OrderByDescending(d => d.Value).First() : null; } }
 
 		public string DbConnectionStr { get { return DbConnection.ConnectionString; } }
+
 		#endregion
 
 		#region Settings
@@ -451,10 +451,9 @@ namespace Common
 					ParseViaFramework = false
 				};
 
-				do
+				while (conn.State == ConnectionState.Open)
 				{
-
-				} while (conn.State == ConnectionState.Open);
+				};
 
 				return conn;
 			}
@@ -642,6 +641,20 @@ namespace Common
 			SQLiteConnection conn = GetDataConnection();
 			Queries.SyncFiles_UpdateWatch(conn, new SyncFile(id, value));
 		}
+
+		public static void SubmitFileUpdate(SyncFile file)
+		{
+			SQLiteConnection conn = GetDataConnection();
+			Queries.SyncFiles_Update(conn, file);
+		}		
+		
+		public static void SubmitFileDelete(Guid id)
+		{
+			SQLiteConnection conn = GetDataConnection();
+			Queries.SyncFiles_Delete(conn, id);
+		}
+
+
 
 		#endregion
 

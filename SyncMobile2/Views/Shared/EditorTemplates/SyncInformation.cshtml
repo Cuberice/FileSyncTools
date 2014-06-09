@@ -26,11 +26,9 @@
             @Html.HiddenFor(m => m.IsMissing, new { @class = "is-missing" })
             @Html.HiddenFor(m => m.IsSynced, new { @class = "is-synced" })
             @Html.HiddenFor(m => m.IsWatched, new { @class = "is-watched" })
-
         </div>
             
-        <div id="DataDiv" style="clear:both" class="DataDivClass">
-        </div>
+        <div id="partial-div-@Model.FileGUID" class="partial-div-class" style="clear:both"></div>
     </a>
 
     @Ajax.ActionLink("Edit", "ShowEditItem", "Home", 
@@ -45,6 +43,6 @@
         {
             HttpMethod = "GET",
             InsertionMode = InsertionMode.Replace,
-            UpdateTargetId = "DataDiv"
+            UpdateTargetId = "partial-div-" + @Model.FileGUID
         })
 </li>

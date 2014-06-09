@@ -22,10 +22,11 @@
             }
             else
             {
-                Html.RenderPartial("~/Views/Home/Partials/BasicNavBar.cshtml"); 
+                Html.RenderPartial("~/Views/Home/Partials/BasicNavBar.cshtml");
             }
         </div>
         <div data-role="content">
+            <span style="text-align: center;"><h5 style="padding: 1px; margin: 1px">@ViewBag.Title</h5></span>
             @RenderBody()
         </div>
     </div>
@@ -42,3 +43,18 @@
 </body>
 
 </html>
+
+<footer>
+    <script type="text/javascript">
+
+        $().ready(function () {
+            $(".edit-item-cancel").click(null, function () {
+
+                $(".partial-div-class").empty();
+                return false;
+            });
+
+        });
+    </script>
+</footer>
+

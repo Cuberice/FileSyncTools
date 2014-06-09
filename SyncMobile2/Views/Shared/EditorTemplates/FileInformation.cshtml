@@ -4,9 +4,14 @@
            
 <li id="@Model.FileGUID" class="ItemLi" data-theme="b">
     <a href="#" class="ItemAnchor">
-        <div class='ui-grid-a'>
+        <div class="inline-right" style="margin-right: 5px">
+            @Html.LabelFor(model => model.IsWatched)
+            @Html.CheckBoxFor(model => model.IsWatched, Swatches.Normal, m => m.AllowIsWatchedEdit, new { @class = "watch-button" })
+        </div>
+
+        <div class="inline-left">
             <div class='ui-block-a'>
-                @Html.HeaderFor(m => m.FileName, 4)
+                <span>@Html.HeaderFor(m => m.FileName, 4)</span>
                 @Html.ParagraphFor(m => "Season: " + m.Season + " - Ep: " + m.Episode)
 
                 @Html.HiddenFor(m => m.FileGUID)
@@ -16,17 +21,9 @@
                 @Html.HiddenFor(m => m.IsMissing, new { @class = "is-missing" })
                 @Html.HiddenFor(m => m.IsSynced, new { @class = "is-synced" })
                 @Html.HiddenFor(m => m.IsWatched, new { @class = "is-watched" })
-                <div id="DataDiv">
-
-                </div>
             </div>
 
-            <div class='ui-block-b'>
-                <div class="inline-right">
-                    @Html.LabelFor(model => model.IsWatched)
-                    @Html.CheckBoxFor(model => model.IsWatched, Swatches.Normal, m => m.AllowIsWatchedEdit, new { @class = "watch-button" })
-                </div>
-            </div>
+            <div id="partial-div-@Model.FileGUID" class="partial-div-class" style="clear:both"></div>
         </div>
     </a>
 
@@ -43,6 +40,6 @@
         {
             HttpMethod = "GET",
             InsertionMode = InsertionMode.Replace,
-            UpdateTargetId = "DataDiv"
+            UpdateTargetId = "partial-div-" + @Model.FileGUID
         })
 </li>

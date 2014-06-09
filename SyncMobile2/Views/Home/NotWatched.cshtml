@@ -4,7 +4,7 @@
 @using (Html.BeginForm("NotWatched", "Home"))
 {
     <div data-role="collapsible-set">
-        <div data-filter="true">
+        <div data-filter="false">
             <ul data-role="listview" data-inset="true" data-split-theme="b" data-count-theme="a">
                 @Html.EditorFor(m => m.PathInformations)
             </ul>

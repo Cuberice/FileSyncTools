@@ -25,7 +25,7 @@ namespace SyncMobile.Controllers
 		//SyncGroup & SyncInformation - Paths are simple seperated by ListSeperator
 		public ActionResult Synced()
 		{
-			ViewBag.Title = "Synchronized";
+			ViewBag.Title = "Last Synchronized Items";
 			ViewBag.Message = "Recently Synchronized groupd by Directory";
 
 			List<SyncPath> col;
@@ -45,7 +45,7 @@ namespace SyncMobile.Controllers
 
 		public ActionResult NotSynced()
 		{
-			ViewBag.Title = "Not Synchronized";
+			ViewBag.Title = "Not Synchronized Yet";
 			ViewBag.Message = "All Files not yet Synchronized groupd by Directory";
 
 			List<SyncPath> col;
@@ -64,7 +64,7 @@ namespace SyncMobile.Controllers
 
 		public ActionResult ErrorFiles()
 		{
-			ViewBag.Title = "Errors";
+			ViewBag.Title = "Errors or Missing Items";
 			ViewBag.Message = "Files with Copy Error, Display Error or Not Downloaded";
 			List<SyncPath> col = new List<SyncPath>();
 
@@ -86,7 +86,7 @@ namespace SyncMobile.Controllers
 		public ActionResult Index()
 		{
 			ViewBag.Title = "What to Whatch Next";
-			ViewBag.Message = "Next File to Whatch and Grouped by Directory for Recently Whatched Directories";
+			ViewBag.Message = "Next File to Watch and Grouped by Directory for Recently Whatched Directories";
 			List<SyncPath> col;
 			try
 			{
@@ -103,7 +103,7 @@ namespace SyncMobile.Controllers
 
 		public ActionResult NotWatched()
 		{
-			ViewBag.Title = "New Synchronized Files by Date";
+			ViewBag.Title = "Not Watched Yet";
 			ViewBag.Message = "All Unwatched Files Ordered by Directory Synchronization Date and Grouped by Directory";
 			List<SyncPath> col;
 			try
@@ -199,7 +199,21 @@ namespace SyncMobile.Controllers
 		[HttpPost]
 		public void UpdateItem(string id, string season, string episode, bool issynced, bool ismissing)
 		{
-			
+			if (true)
+			{
+				SyncFile f = new SyncFile(id, issynced, ismissing, Convert.ToInt32(season), Convert.ToInt32(episode));
+				SyncUtils.SubmitFileUpdate(f);
+			}
+		}		
+		
+		[HttpPost]
+		public void DeleteItem(string id)
+		{
+			if (true)
+			{
+				Guid guid = Guid.Parse(id);
+				SyncUtils.SubmitFileDelete(guid);
+			}
 		}
 
 		#endregion

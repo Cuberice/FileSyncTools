@@ -9,9 +9,11 @@
 @using (Html.BeginForm("AllFiles", "Home"))
 {
     <div data-role="collapsible-set">
-        <ul data-role="listview" data-inset="true" data-split-theme="b">
-            @Html.EditorFor(m => m.PathInformations)
-        </ul>
+        <div data-filter="true">
+            <ul data-role="listview" data-inset="true" data-split-theme="b">
+                @Html.EditorFor(m => m.PathInformations)
+            </ul>
+        </div>
     </div>
 }
 
