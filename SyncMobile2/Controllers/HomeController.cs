@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.SQLite;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -92,9 +93,9 @@ namespace SyncMobile.Controllers
 			{
 				col = SyncUtils.View_GetWatchCollection();
 			}
-			catch
+			catch(Exception c)
 			{
-				return RedirectToAction("Error");
+				return RedirectToAction("Error", new { exceptionmessage = c});
 			}
 			PathGroup sg = new PathGroup { PathInformations = GetPathModelData(col).ToList() };
 			sg.SetAllowEdit(false, true);
@@ -138,10 +139,11 @@ namespace SyncMobile.Controllers
 
 			return View(sg);
 		}
-		
-		public ActionResult Error()
+
+		public ActionResult Error(string exceptionmessage)
 		{
-			ViewBag.ErrorMessage = "Failed "+ SyncUtils.GetDataConnectionString();
+			ViewBag.ConnectionDetails = "Failed On:"+ SyncUtils.GetDataConnectionString();
+			ViewBag.ExceptionMessage = exceptionmessage;
 			return View();
 		}
 

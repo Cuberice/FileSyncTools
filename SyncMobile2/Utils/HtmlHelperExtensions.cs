@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Security.Policy;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
 using Common;
@@ -122,7 +123,6 @@ namespace SyncMobile.Utils
 			Func<TModel, TProperty> deleg = f.Compile();
 			TProperty result = deleg(helper.ViewData.Model);
 
-//			return new MvcHtmlString(string.Format("<h{1}>{2}{0}</h{1}>", result, headervalue, string.Format("<div class=\"ui-btn ui-btn-b ui-btn-corner-all custom-count-pos\"><p style=\"color:red;font-size:20px;margin:0;padding 0 0\">{0}</p></div>", fbubblevalue(helper.ViewData.Model))));
 			return new MvcHtmlString(string.Format("<h{1}>{2}{0}</h{1}>", result, headervalue, string.Format("<div class=\"ui-btn ui-btn-b ui-btn-corner-all custom-count-pos\"><span class=\"ui-li-count ui-body-a\">1</span></div>", fbubblevalue(helper.ViewData.Model))));
 		}		
 		
@@ -159,21 +159,16 @@ namespace SyncMobile.Utils
 			string str = helper.ActionLink(options.Text, options.Action, options.Controller).ToString().Replace("href=", attributes + "href=");
 			return new MvcHtmlString(str);
 		}
-
-		public static MvcHtmlString Anchor<TModel>(this HtmlHelper<TModel> helper, Options options, bool mini)
-		{
-			string anchor = string.Format("<a href=\"/{0}/{1}\">Text Here</a>", options.Controller, options.Action);
-
-			return new MvcHtmlString(anchor);
-		}		
+			
 		public static MvcHtmlString IconAnchor<TModel>(this HtmlHelper<TModel> helper, Options options)
 		{
+			MvcHtmlString s = helper.ActionLink(" ", options.Action, options.Controller, null, new { data_icon = options.Icon });
+			return s;
+
 			string anchor = string.Format("<a href=\"/{0}/{1}\" {2}></a>", options.Controller, options.Action,
 				string.Format("{0}", options.Icon));
 
 			return new MvcHtmlString(anchor);
-
-			/*new { @class = "ui-btn-active" }*/
 		}
 		public static MvcHtmlString IconButton<TModel>(this HtmlHelper<TModel> helper, Options options,  bool mini)
 		{
@@ -270,18 +265,18 @@ namespace SyncMobile.Utils
 	}
 	public static class Icons
 	{
-		public const string Refresh = "data-icon=\"refresh\"";
-		public const string CheckMark = "data-icon=\"check\"";
-		public const string Star = "data-icon=\"star\"";
-		public const string Alert = "data-icon=\"alert\"";
-		public const string Check = "data-icon=\"check\"";
-		public const string Delete = "data-icon=\"delete\"";
-		public const string Plus = "data-icon=\"plus\"";
-		public const string ArrowDown = "data-icon=\"arrow-d\"";
-		public const string Minus = "data-icon=\"minus\"";
-		public const string Info = "data-icon=\"info\"";
-		public const string Home = "data-icon=\"home\"";
-		public const string Grid = "data-icon=\"grid\"";
+		public const string Refresh = "refresh";
+		public const string CheckMark = "check";
+		public const string Star = "star";
+		public const string Alert = "alert";
+		public const string Check = "check";
+		public const string Delete = "delete";
+		public const string Plus = "plus";
+		public const string ArrowDown = "arrow-d";
+		public const string Minus = "minus";
+		public const string Info = "info";
+		public const string Home = "home";
+		public const string Grid = "grid";
 	}
 
 	public static class Swatches
