@@ -24,7 +24,7 @@
 
     $(".watch-button").click(null, function () {
         $.ajax({
-            url: "/Home/WatchItem",
+            url: "/WatchItem",
             type: 'POST',
             data: { id: $(this).parents("li").attr("id"), value: $(this).prop("checked") }
 //            success: function () {

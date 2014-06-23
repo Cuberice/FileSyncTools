@@ -194,8 +194,7 @@ namespace SyncMobile.Controllers
 		[HttpPost]
 		public void WatchItem(string id, bool value)
 		{
-			if (true)
-				SyncUtils.SubmitFilesWatch(id, value);
+			SyncUtils.SubmitFilesWatch(id, value);
 		}		
 		
 		[HttpPost]
