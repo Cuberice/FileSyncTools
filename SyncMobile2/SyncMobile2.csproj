@@ -368,7 +368,6 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <None Include="Properties\PublishProfiles\Package.pubxml" />
     <None Include="Properties\PublishProfiles\Publish Afrihost.pubxml" />
     <None Include="Properties\PublishProfiles\Publish Dropbox.pubxml" />
     <None Include="Properties\PublishProfiles\Publish Local.pubxml" />
@@ -426,6 +425,9 @@
       <Project>{cf22c6d6-d787-4651-9a56-75e8f0a1ff37}</Project>
       <Name>Common</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

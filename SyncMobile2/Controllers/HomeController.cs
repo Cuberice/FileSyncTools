@@ -34,9 +34,9 @@ namespace SyncMobile.Controllers
 			{
 				col = SyncUtils.View_SyncedCollection();
 			}
-			catch
+			catch (Exception c)
 			{
-				return RedirectToAction("Error");
+				return RedirectToAction("Error", new { exceptionmessage = c });
 			}
 
 			SyncGroup sg = new SyncGroup {SyncInformations = GetInformationModelData(col).ToList()};
@@ -54,9 +54,9 @@ namespace SyncMobile.Controllers
 			{
 				col = SyncUtils.View_GetNotSyncedCollection();
 			}
-			catch
+			catch (Exception c)
 			{
-				return RedirectToAction("Error");
+				return RedirectToAction("Error", new { exceptionmessage = c });
 			}
 
 			SyncGroup sg = new SyncGroup { SyncInformations = GetInformationModelData(col).ToList() };
@@ -73,9 +73,9 @@ namespace SyncMobile.Controllers
 			{
 				col = SyncUtils.View_GetErrorCollection();
 			}
-			catch
+			catch (Exception c)
 			{
-				return RedirectToAction("Error");
+				return RedirectToAction("Error", new { exceptionmessage = c });
 			}
 
 			SyncGroup sg = new SyncGroup { SyncInformations = GetInformationModelData(col).ToList() };
@@ -111,9 +111,9 @@ namespace SyncMobile.Controllers
 			{
 				col = SyncUtils.View_GetNotWatchedCollection();
 			}
-			catch
+			catch (Exception c)
 			{
-				return RedirectToAction("Error");
+				return RedirectToAction("Error", new { exceptionmessage = c });
 			}
 			PathGroup sg = new PathGroup { PathInformations = GetPathModelData(col).ToList() };
 			sg.SetAllowEdit(false, true);
@@ -129,9 +129,9 @@ namespace SyncMobile.Controllers
 			{
 				col = SyncUtils.View_GetAllCollection();
 			}
-			catch
+			catch (Exception c)
 			{
-				return RedirectToAction("Error");
+				return RedirectToAction("Error", new { exceptionmessage = c });
 			}
 			PathGroup sg = new PathGroup {PathInformations = GetPathModelData(col)};
 
@@ -148,48 +148,22 @@ namespace SyncMobile.Controllers
 		}
 
 		//Partials
-		public PartialViewResult ShowEditItem(string guid, int season, int episode, bool ismissing )
+		public PartialViewResult ShowEditItem(string guid, int season, int episode, bool ismissing, bool issynced )
 		{
-			return PartialView("~/Views/Home/Partials/_EditItem.cshtml", new SyncInformation() { FileGUID = guid, Season = season, Episode = episode, IsMissing = ismissing });
+			return PartialView("~/Views/Home/Partials/_EditItem.cshtml", 
+				new SyncInformation()
+				{
+					FileGUID = guid, 
+					Season = season, 
+					Episode = episode, 
+					IsSynced = issynced, 
+					IsMissing = ismissing
+				});
 		}	
 		
 		#endregion
 
 		#region HttpPost
-
-		[HttpPost]
-		public ActionResult NotSynced(IList<SyncInformation> syncInformations)
-		{
-			SubmitData(syncInformations);
-			return RedirectToAction("NotSynced");
-		}
-
-		[HttpPost]
-		public ActionResult Index(IList<PathInformation> pathInformations)
-		{
-			SubmitData(pathInformations);
-			return RedirectToAction("Index");
-		}
-
-		[HttpPost]
-		public ActionResult NotWatched(IList<PathInformation> pathInformations)
-		{
-			SubmitData(pathInformations);
-			return RedirectToAction("NotWatched");
-		}
-
-		[HttpPost]
-		public ActionResult AllFiles(IList<PathInformation> pathInformations)
-		{
-			return RedirectToAction("AllFiles");
-		}
-
-		[HttpPost]
-		public ActionResult ErrorFiles(IList<SyncInformation> syncInformations)
-		{
-			SubmitData(syncInformations);
-			return RedirectToAction("ErrorFiles");
-		}
 
 		[HttpPost]
 		public void WatchItem(string id, bool value)
@@ -200,21 +174,15 @@ namespace SyncMobile.Controllers
 		[HttpPost]
 		public void UpdateItem(string id, string season, string episode, bool issynced, bool ismissing)
 		{
-			if (true)
-			{
-				SyncFile f = new SyncFile(id, issynced, ismissing, Convert.ToInt32(season), Convert.ToInt32(episode));
-				SyncUtils.SubmitFileUpdate(f);
-			}
+			SyncFile f = new SyncFile(id, issynced, ismissing, Convert.ToInt32(season), Convert.ToInt32(episode));
+			SyncUtils.SubmitFileUpdate(f);
 		}		
 		
 		[HttpPost]
 		public void DeleteItem(string id)
 		{
-			if (true)
-			{
-				Guid guid = Guid.Parse(id);
-				SyncUtils.SubmitFileDelete(guid);
-			}
+			Guid guid = Guid.Parse(id);
+			SyncUtils.SubmitFileDelete(guid);
 		}
 
 		#endregion
@@ -349,6 +317,24 @@ namespace SyncMobile.Controllers
 			SyncInformation s = new SyncInformation {FileGUID = "PartialGuid", IsPath = true, PathName = "Partial"};
 			return PartialView("_TestPartial", s);
 		}
+
+		#endregion
+
+		#region Example Code
+
+//		[HttpPost]
+//		public ActionResult NotSynced(IList<SyncInformation> syncInformations)
+//		{
+//			SubmitData(syncInformations);
+//			return RedirectToAction("NotSynced");
+//		}
+//
+//		[HttpPost]
+//		public ActionResult Index(IList<PathInformation> pathInformations)
+//		{
+//			SubmitData(pathInformations);
+//			return RedirectToAction("Index");
+//		}
 
 		#endregion
 	}

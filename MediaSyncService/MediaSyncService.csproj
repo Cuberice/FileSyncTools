@@ -97,6 +97,10 @@
       <Project>{be4c1252-68e1-4380-a744-37a9ec055f4b}</Project>
       <Name>DataAdapter</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{cf22c6d6-d787-4651-9a56-75e8f0a1ff37}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
