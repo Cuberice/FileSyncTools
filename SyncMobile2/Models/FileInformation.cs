@@ -10,15 +10,19 @@ namespace SyncMobile.Models
 	{
 		[Required]
 		public string FileGUID { get; set; }
+
 		[Required]
 		public string FileName { get; set; }
 		
 		[Display(Name = "Synced")]
 		public bool IsSynced { get; set; }
+
 		[Display(Name = "Watched")]
 		public bool IsWatched { get; set; }
+
 		[Display(Name = "Error")]
 		public int Error { get; set; }
+
 		public bool IsMissing { get; set; }
 
 		public string FileDate { get; set; }

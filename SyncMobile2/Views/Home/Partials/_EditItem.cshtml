@@ -58,10 +58,9 @@
                     episode: $fm.find("#edit-episode").val(),
                     issynced: $fm.find(".edit-issynced").prop("checked"),
                     ismissing: $fm.find(".edit-ismissing").prop("checked")
-                },
-                success: function () {
-                    $(this).parents("li").trigger('create');
-                },
+                    },
+                success: function () { $(this).parents("li").trigger('create'); },
+                error: function () { alert("An Error Occured!!"); }
             });
 
             $("#partial-div-@Model.FileGUID").empty();
