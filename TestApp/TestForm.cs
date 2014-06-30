@@ -26,26 +26,31 @@ namespace MediaSync
 			DataService = new DataService();
 			Builder = new SQLBuilder(DataService.Adapter);
 			Builder.CreateStructure();
-
-			List<CoreEquipment> data = DataService.GetAllForModelCache<CoreEquipment>(); //ModelExtensions.CreateInstance<CoreEquipment>);
-			Grid.DataSource = data;
 		}
 
 		private void GenerateTestData_Click(object sender, EventArgs e)
 		{
 			List<CoreEquipment> data = ModelExtensions.CreateTestInstances<CoreEquipment>(5);
-			List<CoreEquipmentMake> make = ModelExtensions.CreateTestInstances<CoreEquipmentMake>(5);
-
 			Grid.DataSource = data;
 		}
 
-		private void TestSelect_Click(object sender, EventArgs e)
+		private void Select_Click(object sender, EventArgs e)
 		{
 			List<CoreEquipment> data = DataService.SelectForModel<CoreEquipment>();
-			List<CoreEquipment> data2 = DataService.SelectForModel<CoreEquipment>(eq => eq.Name == "4c6fcf40");
+			Grid.DataSource = data;
+		}
+		private void SelectWhere_Click(object sender, EventArgs e)
+		{
+			List<CoreEquipment> data = DataService.SelectForModel<CoreEquipment>(eq => eq.Name == txtWhere.Text);
+			Grid.DataSource = data;
+		}
+		private void SelectCache_Click(object sender, EventArgs e)
+		{
+			List<CoreEquipment> data = DataService.GetAllForModelCache<CoreEquipment>(); 
+			Grid.DataSource = data;
 		}
 
-		private void TestInsert_Click(object sender, EventArgs e)
+		private void Insert_Click(object sender, EventArgs e)
 		{
 			List<CoreEquipment> data = ModelExtensions.CreateTestInstances<CoreEquipment>(3);
 			data.ForEach(i => DataService.InsertModel(i));
@@ -53,32 +58,32 @@ namespace MediaSync
 			Grid.DataSource = data;
 		}
 
-		private void TestUpdate_Click(object sender, EventArgs e)
+		private void Update_Click(object sender, EventArgs e)
 		{
-			CoreEquipment eq = DataService.GetAllForModel(ModelExtensions.CreateInstance<CoreEquipment>).First();
+			CoreEquipment eq = DataService.SelectForModel<CoreEquipment>().First();
 			eq.SerialNumber = "123-456-789";
 
 			DataService.UpdateModel(eq);
 
-			List<CoreEquipment> equipment = DataService.GetAllForModel(ModelExtensions.CreateInstance<CoreEquipment>);
+			List<CoreEquipment> equipment = DataService.SelectForModel<CoreEquipment>();
 			Grid.DataSource = equipment;
 		}
 
 		private void TestCode_Click(object sender, EventArgs e)
 		{
 			Guid guid = Guid.Parse("bd006ac3-7583-4c56-96e5-d20265e8f00f");
-//			string cmd = DataService.Adapter.CreateSelectCommand<CoreEquipmentMake>(eq => eq.Name == "006583-3");
-
-			string cmd = DataService.Adapter.CreateSelectCommand<CoreEquipmentMake>(eq => eq.ID == guid);
-			DataService.Adapter.PerformWithDataReader(cmd, r => ModelExtensions.CreateInstance<CoreEquipmentMake>(r));
+			IAdapterCommand cmd = DataService.Adapter.CreateSelectCommand<CoreEquipmentMake>(eq => eq.ID == guid);
 		}
 
-		private void TestExpression_Click(object sender, EventArgs e)
+		private void Expression_Click(object sender, EventArgs e)
 		{
-			AdapterExtensions.FromExpression<CoreEquipment>(eq => !eq.IsBroken);
-			AdapterExtensions.FromExpression<CoreEquipment>(eq => eq.Name == "TestName");
-			AdapterExtensions.FromExpression<CoreEquipment>(eq => eq.Cost >= 10.0);
-			AdapterExtensions.FromExpression<CoreEquipment>(eq => eq.Name == "TestName" && eq.Cost >= 10.0);
+			ExpressionExtensions.FromExpression<CoreEquipment>(eq => eq.Name == "TestName");
+			ExpressionExtensions.FromExpression<CoreEquipment>(eq => eq.Name == "TestName" && eq.Cost >= 10.0);
+			ExpressionExtensions.FromExpression<CoreEquipment>(eq => (eq.Name == "TestName" && eq.Cost >= 10.0) || eq.SerialNumber == "127225-258");
+
+			ExpressionExtensions.FromExpression<CoreEquipment>(eq => eq.Make.Equals(new CoreEquipmentMake()));
+			ExpressionExtensions.FromExpression<CoreEquipment>(eq => !eq.IsBroken);
 		}
+
 	}
 }

@@ -35,6 +35,9 @@
 			this.button3 = new System.Windows.Forms.Button();
 			this.button4 = new System.Windows.Forms.Button();
 			this.button5 = new System.Windows.Forms.Button();
+			this.button6 = new System.Windows.Forms.Button();
+			this.button7 = new System.Windows.Forms.Button();
+			this.txtWhere = new System.Windows.Forms.TextBox();
 			((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -45,9 +48,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.grid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.grid.Location = new System.Drawing.Point(12, 104);
+			this.grid.Location = new System.Drawing.Point(12, 100);
 			this.grid.Name = "grid";
-			this.grid.Size = new System.Drawing.Size(1116, 332);
+			this.grid.Size = new System.Drawing.Size(1116, 336);
 			this.grid.TabIndex = 0;
 			// 
 			// button1
@@ -62,23 +65,23 @@
 			// 
 			// btnTestInsert
 			// 
-			this.btnTestInsert.Location = new System.Drawing.Point(148, 41);
+			this.btnTestInsert.Location = new System.Drawing.Point(148, 13);
 			this.btnTestInsert.Name = "btnTestInsert";
 			this.btnTestInsert.Size = new System.Drawing.Size(129, 23);
 			this.btnTestInsert.TabIndex = 2;
 			this.btnTestInsert.Text = "Insert";
 			this.btnTestInsert.UseVisualStyleBackColor = true;
-			this.btnTestInsert.Click += new System.EventHandler(this.TestInsert_Click);
+			this.btnTestInsert.Click += new System.EventHandler(this.Insert_Click);
 			// 
 			// button2
 			// 
-			this.button2.Location = new System.Drawing.Point(148, 70);
+			this.button2.Location = new System.Drawing.Point(148, 42);
 			this.button2.Name = "button2";
 			this.button2.Size = new System.Drawing.Size(129, 23);
 			this.button2.TabIndex = 3;
 			this.button2.Text = "Update";
 			this.button2.UseVisualStyleBackColor = true;
-			this.button2.Click += new System.EventHandler(this.TestUpdate_Click);
+			this.button2.Click += new System.EventHandler(this.Update_Click);
 			// 
 			// button3
 			// 
@@ -92,29 +95,60 @@
 			// 
 			// button4
 			// 
-			this.button4.Location = new System.Drawing.Point(148, 12);
+			this.button4.Location = new System.Drawing.Point(283, 12);
 			this.button4.Name = "button4";
 			this.button4.Size = new System.Drawing.Size(129, 23);
 			this.button4.TabIndex = 5;
 			this.button4.Text = "Select";
 			this.button4.UseVisualStyleBackColor = true;
-			this.button4.Click += new System.EventHandler(this.TestSelect_Click);
+			this.button4.Click += new System.EventHandler(this.Select_Click);
 			// 
 			// button5
 			// 
-			this.button5.Location = new System.Drawing.Point(305, 13);
+			this.button5.Location = new System.Drawing.Point(13, 70);
 			this.button5.Name = "button5";
 			this.button5.Size = new System.Drawing.Size(129, 23);
 			this.button5.TabIndex = 6;
 			this.button5.Text = "Test Expression";
 			this.button5.UseVisualStyleBackColor = true;
-			this.button5.Click += new System.EventHandler(this.TestExpression_Click);
+			this.button5.Click += new System.EventHandler(this.Expression_Click);
+			// 
+			// button6
+			// 
+			this.button6.Location = new System.Drawing.Point(283, 42);
+			this.button6.Name = "button6";
+			this.button6.Size = new System.Drawing.Size(129, 23);
+			this.button6.TabIndex = 7;
+			this.button6.Text = "Select Cache";
+			this.button6.UseVisualStyleBackColor = true;
+			this.button6.Click += new System.EventHandler(this.SelectCache_Click);
+			// 
+			// button7
+			// 
+			this.button7.Location = new System.Drawing.Point(283, 71);
+			this.button7.Name = "button7";
+			this.button7.Size = new System.Drawing.Size(129, 23);
+			this.button7.TabIndex = 8;
+			this.button7.Text = "Select Where";
+			this.button7.UseVisualStyleBackColor = true;
+			this.button7.Click += new System.EventHandler(this.SelectWhere_Click);
+			// 
+			// txtWhere
+			// 
+			this.txtWhere.Location = new System.Drawing.Point(148, 72);
+			this.txtWhere.Name = "txtWhere";
+			this.txtWhere.Size = new System.Drawing.Size(129, 20);
+			this.txtWhere.TabIndex = 9;
+			this.txtWhere.Text = "Where clause...";
 			// 
 			// TestForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1140, 448);
+			this.Controls.Add(this.txtWhere);
+			this.Controls.Add(this.button7);
+			this.Controls.Add(this.button6);
 			this.Controls.Add(this.button5);
 			this.Controls.Add(this.button4);
 			this.Controls.Add(this.button3);
@@ -127,6 +161,7 @@
 			this.Shown += new System.EventHandler(this.TestForm_Shown);
 			((System.ComponentModel.ISupportInitialize)(this.grid)).EndInit();
 			this.ResumeLayout(false);
+			this.PerformLayout();
 
 		}
 
@@ -139,5 +174,8 @@
 		private System.Windows.Forms.Button button3;
 		private System.Windows.Forms.Button button4;
 		private System.Windows.Forms.Button button5;
+		private System.Windows.Forms.Button button6;
+		private System.Windows.Forms.Button button7;
+		private System.Windows.Forms.TextBox txtWhere;
 	}
 }
