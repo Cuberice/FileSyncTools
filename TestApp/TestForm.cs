@@ -17,14 +17,16 @@ namespace MediaSync
 		}
 
 		protected DataGridView Grid { get { return grid; } }
-		protected IDataService DataService { get; private set; }
-		protected IDbAdapter Adapter { get { return DataService.Adapter; } }
+		protected IDataService CoreDataService { get; private set; }
+		protected IMediaSyncService DomainDataService { get; private set; }
+		protected IDbAdapter CoreAdapter { get { return CoreDataService.Adapter; } }
 		protected SQLBuilder Builder { get; private set; }
 
 		private void TestForm_Shown(object sender, EventArgs e)
 		{
-			DataService = new DataService();
-			Builder = new SQLBuilder(DataService.Adapter);
+			CoreDataService = new DataService();
+			DomainDataService = new MediaSyncService();
+			Builder = new SQLBuilder(CoreDataService.Adapter);
 			Builder.CreateStructure();
 		}
 
@@ -36,43 +38,43 @@ namespace MediaSync
 
 		private void Select_Click(object sender, EventArgs e)
 		{
-			List<CoreEquipment> data = DataService.SelectForModel<CoreEquipment>();
+			List<CoreEquipment> data = CoreDataService.SelectForModel<CoreEquipment>();
 			Grid.DataSource = data;
 		}
 		private void SelectWhere_Click(object sender, EventArgs e)
 		{
-			List<CoreEquipment> data = DataService.SelectForModel<CoreEquipment>(eq => eq.Name == txtWhere.Text);
+			List<CoreEquipment> data = CoreDataService.SelectForModel<CoreEquipment>(eq => eq.Name == txtWhere.Text);
 			Grid.DataSource = data;
 		}
-		private void SelectCache_Click(object sender, EventArgs e)
+		private void SelectNoCache_Click(object sender, EventArgs e)
 		{
-			List<CoreEquipment> data = DataService.GetAllForModelCache<CoreEquipment>(); 
+			List<CoreEquipment> data = CoreDataService.GetAllForModelNoCache<CoreEquipment>(); 
 			Grid.DataSource = data;
 		}
 
 		private void Insert_Click(object sender, EventArgs e)
 		{
 			List<CoreEquipment> data = ModelExtensions.CreateTestInstances<CoreEquipment>(3);
-			data.ForEach(i => DataService.InsertModel(i));
-			data.Select(i => i.Make).ToList().ForEach(i => DataService.InsertModel(i));
+			data.ForEach(i => CoreDataService.InsertModel(i));
+			data.Select(i => i.Make).ToList().ForEach(i => CoreDataService.InsertModel(i));
 			Grid.DataSource = data;
 		}
 
 		private void Update_Click(object sender, EventArgs e)
 		{
-			CoreEquipment eq = DataService.SelectForModel<CoreEquipment>().First();
+			CoreEquipment eq = CoreDataService.SelectForModel<CoreEquipment>().First();
 			eq.SerialNumber = "123-456-789";
 
-			DataService.UpdateModel(eq);
+			CoreDataService.UpdateModel(eq);
 
-			List<CoreEquipment> equipment = DataService.SelectForModel<CoreEquipment>();
+			List<CoreEquipment> equipment = CoreDataService.SelectForModel<CoreEquipment>();
 			Grid.DataSource = equipment;
 		}
 
 		private void TestCode_Click(object sender, EventArgs e)
 		{
 			Guid guid = Guid.Parse("bd006ac3-7583-4c56-96e5-d20265e8f00f");
-			IAdapterCommand cmd = DataService.Adapter.CreateSelectCommand<CoreEquipmentMake>(eq => eq.ID == guid);
+			IAdapterCommand cmd = CoreDataService.Adapter.CreateSelectCommand<CoreEquipmentMake>(eq => eq.ID == guid);
 		}
 
 		private void Expression_Click(object sender, EventArgs e)
@@ -83,6 +85,20 @@ namespace MediaSync
 
 			ExpressionExtensions.FromExpression<CoreEquipment>(eq => eq.Make.Equals(new CoreEquipmentMake()));
 			ExpressionExtensions.FromExpression<CoreEquipment>(eq => !eq.IsBroken);
+		}
+
+		private void DomainSelect_Click(object sender, EventArgs e)
+		{
+			List<SyncPath> data = DomainDataService.Domain_GetAllForSyncPath();
+			Grid.DataSource = data;
+		}
+
+		private void DebugAssemblies_Click(object sender, EventArgs e)
+		{
+			List<Table> data = AttributeExtensions.DebugGetNamespaceTableTypes();
+
+			Grid.DataMember = "TableName";
+			Grid.DataSource = data;
 		}
 
 	}

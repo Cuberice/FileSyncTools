@@ -40,6 +40,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaSyncService", "MediaSy
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestApp", "TestApp\TestApp.csproj", "{F55A734F-5DF6-4E47-854C-1D2008039336}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Content", "Content", "{1CB028EE-AF34-43D2-A34A-83E287D24C13}"
+	ProjectSection(SolutionItems) = preProject
+		Content\MediaSync.sqlitedb = Content\MediaSync.sqlitedb
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		CD_ROM|Any CPU = CD_ROM|Any CPU

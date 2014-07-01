@@ -1,12 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ServiceModel;
 using Common;
+using Core.Service;
+using Models;
 
 namespace MediaSync
 {
 	[ServiceContract]
-	public interface IMediaSyncService
+	public interface IMediaSyncService : IDataService
 	{
+		[OperationContract]
+		List<SyncPath> Domain_GetAllForSyncPath();
+
 		[OperationContract]
 		List<SyncPath> Data_GetAllCollection();
 	
@@ -24,5 +30,15 @@ namespace MediaSync
 
 		[OperationContract]
 		List<SyncPath> Data_GetErrorCollection();
+
+
+		[OperationContract]
+		void SubmitFilesWatch(string id, bool value);
+
+		[OperationContract]
+		void SubmitFileUpdate(SyncFile file);
+
+		[OperationContract]
+		void SubmitFileDelete(Guid id);
 	}
 }

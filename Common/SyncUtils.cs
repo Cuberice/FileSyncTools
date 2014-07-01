@@ -16,6 +16,7 @@ using System.Web.Hosting;
 using System.Windows.Forms;
 using Common.Properties;
 using System.Web;
+using Models;
 using TvdbLib;
 using TvdbLib.Data;
 

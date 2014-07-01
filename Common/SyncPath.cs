@@ -5,11 +5,19 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Common;
+using Core.Data;
 
-namespace Common
+namespace Models
 {
+	[Table("TBL_SYNCPATH")]
 	public class SyncPath
 	{
+		public SyncPath()
+		{
+			//Default Constructor for Model
+		}
+
 		/// <summary>
 		/// Used for Reading the Path data from the Database
 		/// </summary>
@@ -36,17 +44,27 @@ namespace Common
 	
 		#region Properties
 
+		[Column("ID", Column.DataType.Guid, PrimaryKey = true)]
 		public Guid ID { get; set; }
-		public string Name { get; set; }
-		public DirectoryInfo SourceDir { get; set; }
-		public DirectoryInfo DestinationDir { get; set; }
-		public List<SyncFile> Files { get; set; }
 
+		[Column("NAME", Column.DataType.String, NotNull = true)]
+		public string Name { get; set; }
+
+		[Column("SOURCEPATH", Column.DataType.String)]
+		public DirectoryInfo SourceDir { get; set; }
+
+		[Column("DESTINATIONPATH", Column.DataType.String)]
+		public DirectoryInfo DestinationDir { get; set; }
+
+		[Column("ERROR", Column.DataType.Boolean)]
+		public bool Error { get; set; }
+
+		[Column("TVDBID", Column.DataType.Integer)]
+		public int? TvDbID { get; set; }
+
+		public List<SyncFile> Files { get; set; }
 		public SyncStatus Status { get; set; }
 		public string ErrorDescription { get; set; } //Status Description
-		public bool Error { get; set; }
-		public int? TvDbID { get; set; }
-		
 		#endregion
 
 		#region Season Episode Helpers
@@ -540,7 +558,7 @@ namespace Common
 			{SyncStatus.DirInfo, 5},
 			{SyncStatus.Error, 6},
 		};
-		
+
 		#endregion
 	}
 
@@ -557,23 +575,46 @@ namespace Common
 		}
 	}
 
+	[Table("TBL_SYNCDATA")]
 	public class SyncFile
 	{
+		[Column("ID", Column.DataType.Guid, PrimaryKey = true)]
 		public Guid ID { get; set; }
+
+		[Column("SYNCPATHID", Column.DataType.Guid, NotNull = true)]
+		public Guid SYNCPATHID { get; set; }
+
+		[Column("SYNCDATE", Column.DataType.DateTime)]
 		public DateTime? SyncDate { get; set; }				//Date Synced
+
+		[Column("FILEDATE", Column.DataType.DateTime)]
 		public DateTime? FileDate { get; set; }				//Download Complete
+
+		[Column("WATCHDATE", Column.DataType.DateTime)]
+		public DateTime? WatchDate { get; set; }
+
+		[Column("SEASON", Column.DataType.Integer)]
 		public int? Season { get; set; }
+
+		[Column("EPISODE", Column.DataType.Integer)]
 		public int? Episode { get; set; }
 
+		[Column("ISSYNCED", Column.DataType.Boolean)]
 		public bool IsSynced { get; set; }						//New Synched files
-		public bool IsWatched { get; set; }
-		public bool IsMissing { get; set; }
-		public DateTime? WatchDate { get; set; }
-		public int Error { get; set; }		
 
+		[Column("ISWATCHED", Column.DataType.Boolean)]
+		public bool IsWatched { get; set; }
+
+		[Column("ISMISSING", Column.DataType.Boolean)]
+		public bool IsMissing { get; set; }
+		
+		[Column("FILENAME", Column.DataType.String)]
 		public FileInfo File { get; set; }
+
+
 		public bool AllowIsSyncEdit { get; set; }
 		public bool AllowIsWatchedEdit { get; set; }
+		public int Error { get; set; }
 
 		//Used with Reading Data from the database
 		public SyncFile(Guid id, DateTime? syncdate, DateTime? filedate, bool issynced, bool iswatched, DateTime? watchdate, bool ismissing, int season, int episode, string file)
