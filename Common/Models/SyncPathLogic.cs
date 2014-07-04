@@ -1,72 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 using Common;
 using Core.Data;
 
 namespace Models
 {
-	[Table("TBL_SYNCPATH")]
-	public class SyncPath
+	public partial class SyncPath
 	{
-		public SyncPath()
-		{
-			//Default Constructor for Model
-		}
-
-		/// <summary>
-		/// Used for Reading the Path data from the Database
-		/// </summary>
-		/// <param name="id"></param>
-		/// <param name="name"></param>
-		/// <param name="sourceDir"></param>
-		/// <param name="destDir"></param>
-		/// <param name="tvDbId"></param>
-		public SyncPath(Guid id, string name, string sourceDir, string destDir, int? tvDbId) 
-		{
-			Files = new List<SyncFile>();
-			SourceDir = string.IsNullOrEmpty(sourceDir) ? null : new DirectoryInfo(sourceDir);
-			DestinationDir = new DirectoryInfo(destDir);
-			Status = SyncStatus.New;
-			TvDbID = tvDbId;
-
-			Name = string.IsNullOrEmpty(name) ? SourceDir.FullName.Replace(SourceDir.Root.Name, "").Replace('\\', '.') : name;
-			ID = id;
-		}
-
-		public SyncPath(string name, string sourceDir, string destDir) : this(Guid.NewGuid(), name, sourceDir, destDir, null)
-		{
-		}
-	
-		#region Properties
-
-		[Column("ID", Column.DataType.Guid, PrimaryKey = true)]
-		public Guid ID { get; set; }
-
-		[Column("NAME", Column.DataType.String, NotNull = true)]
-		public string Name { get; set; }
-
-		[Column("SOURCEPATH", Column.DataType.String)]
-		public DirectoryInfo SourceDir { get; set; }
-
-		[Column("DESTINATIONPATH", Column.DataType.String)]
-		public DirectoryInfo DestinationDir { get; set; }
-
-		[Column("ERROR", Column.DataType.Boolean)]
-		public bool Error { get; set; }
-
-		[Column("TVDBID", Column.DataType.Integer)]
-		public int? TvDbID { get; set; }
-
-		public List<SyncFile> Files { get; set; }
-		public SyncStatus Status { get; set; }
-		public string ErrorDescription { get; set; } //Status Description
-		#endregion
-
 		#region Season Episode Helpers
 
 		public int? MinEpisode(int season)
@@ -77,38 +20,38 @@ namespace Models
 		public int? MaxEpisode(int season)
 		{
 			return Files.Where(f => f.Season == season).Max(sf => sf.Episode);
-		}			
-		
+		}
+
 		public bool HasEpisode(int season, int episode)
 		{
 			return Files.Any(f => f.Season == season && f.Episode == episode);
-		}		
-		
+		}
+
 		public bool HasEpisodesAfter(int season, int episode)
 		{
 			return Files.Any(f => f.Season == season && f.Episode > episode);
-		}			
-		
+		}
+
 		public bool HasMissing(int season, int episode)
 		{
 			return MissingBefore(season, episode).Any();
-		}			
-		
+		}
+
 		public List<SyncFile> MissingBefore(int season, int episode)
 		{
 			return Files.Where(sf => sf.IsMissing && sf.Season == season && sf.Episode <= episode).ToList();
-		}			
-		
+		}
+
 		public List<int> NextEpisodes(int season, int episode, int amount)
 		{
 			return Files.Where(f => f.Season == season && f.Episode.HasValue && f.Episode > episode).Select(f => f.Episode.Value).OrderBy(e => e).Take(amount).ToList();
-		}			
-		
+		}
+
 		public int? MaxWatchedEpisode(int season)
 		{
 			return Files.Where(f => f.IsWatched && f.Season == season).Max(sf => sf.Episode);
-		}	
-		
+		}
+
 		public SyncFile EpisodeFile(int season, int episode)
 		{
 			return Files.First(f => f.Season.HasValue && f.Season == season && f.Episode.HasValue && f.Episode == episode);
@@ -127,20 +70,20 @@ namespace Models
 		public bool HasSeasonsAfter(int season)
 		{
 			return Files.Any(f => f.Season > season);
-		}		
+		}
 		public int SeasonAfter(int season)
 		{
 			return Files.OrderBy(f => f.Season).First(f => f.Season > season).Season.Value;
 		}
 
 		#endregion
-		
+
 		#region Date Helpers
 
 		public DateTime? LastSyncDate { get { return Files.Any(f => f.IsSynced && f.SyncDate.HasValue) ? Files.Where(f => f.IsSynced).OrderByDescending(f => f.SyncDate).First().SyncDate : null; } }
 		public DateTime? LastFileDate { get { return Files.Any(f => f.FileDate.HasValue) ? Files.OrderByDescending(f => f.FileDate).First().FileDate : null; } }
 		public DateTime? LastWatchDate { get { return Files.Any(f => f.WatchDate.HasValue) ? Files.Where(f => f.IsWatched).OrderByDescending(f => f.WatchDate).First().SyncDate : null; } }
-		public bool IsRecentlyWatched { get { return LastWatchDate.HasValue && DateTime.Now.Subtract(LastWatchDate.Value) < TimeSpan.FromDays(14); }}
+		public bool IsRecentlyWatched { get { return LastWatchDate.HasValue && DateTime.Now.Subtract(LastWatchDate.Value) < TimeSpan.FromDays(14); } }
 
 		#endregion
 
@@ -149,11 +92,11 @@ namespace Models
 		/// Returns if Path has files which are not Synced and does Exist on system
 		/// </summary>
 		/// <returns></returns>
-		public bool HasSyncableFiles{ get{ return GetNotSyncedFiles().Any();}}
+		public bool HasSyncableFiles { get { return GetNotSyncedFiles().Any(); } }
 		public bool AllFilesExist { get { return Files.All(sf => sf.File.Exists); } }
 
 		public List<SyncFile> NonExistingFiles { get { return Files.Where(sf => !sf.File.Exists).ToList(); } }
-		public List<SyncFile> HasErrorFiles { get { return Files.Where(sf => sf.Error > 0 ).ToList(); } }
+		public List<SyncFile> HasErrorFiles { get { return Files.Where(sf => sf.Error > 0).ToList(); } }
 
 		public void SetFiles(Func<List<SyncFile>> GetFiles)
 		{
@@ -196,14 +139,14 @@ namespace Models
 		/// <param name="onlyNotSynced"></param>
 		public void UpdateSourceFileLocation(SyncFile sf, bool onlyNotSynced)
 		{
-			if ((onlyNotSynced && !sf.IsSynced) && !sf.File.Exists || (!onlyNotSynced && !sf.File.Exists) )
+			if ((onlyNotSynced && !sf.IsSynced) && !sf.File.Exists || (!onlyNotSynced && !sf.File.Exists))
 			{
 				List<FileInfo> file = new List<FileInfo>();
 				file = RecurseDirs(SourceDir, file);
 				file = file.Where(f => f.Name == sf.File.Name).ToList();
 
 				if (file.Any() && file.First().Exists)
-					sf.File = file.First();
+					sf.file = file.First();
 			}
 		}
 
@@ -242,7 +185,7 @@ namespace Models
 				Trace.WriteLine("FAILED TO UPDATE DIRECTORY " + e);
 			}
 		}
-		
+
 		/// <summary>
 		/// Updates the copied file on the Destination folders CreationDate to the current time.
 		/// </summary>
@@ -253,14 +196,14 @@ namespace Models
 			try
 			{
 				list.ForEach(sp =>
-						{
-							string path = string.Format("{0}\\{1}", DestinationDir, sp.Name);
-							if (File.Exists(path))
-							{
-								File.SetLastWriteTime(path, DateTime.Now);		//Reset the File Date to Now
-								File.SetCreationTime(path, DateTime.Now);
-							}
-						});
+				{
+					string path = string.Format("{0}\\{1}", DestinationDir, sp.Name);
+					if (File.Exists(path))
+					{
+						File.SetLastWriteTime(path, DateTime.Now);		//Reset the File Date to Now
+						File.SetCreationTime(path, DateTime.Now);
+					}
+				});
 				return true;
 			}
 			catch (Exception e)
@@ -271,7 +214,7 @@ namespace Models
 		}
 
 		#region Files
-		
+
 		//Determines the Season&Episode on Add, not with SyncFile Contruction because we do not want to recalculate data when reading from the database
 		public void AddFile(FileInfo fi)
 		{
@@ -287,16 +230,16 @@ namespace Models
 			else
 				AddFile(nsf);
 		}
-		
+
 		public void AddFile(SyncFile f)
 		{
 			Files.Add(f);
 		}
-		
+
 		public List<SyncFile> GetSyncedFiles(DateTime? last)
 		{
-			return Files.Where(sf => sf.IsSynced && !sf.IsWatched && !sf.IsMissing 
-				&& sf.SyncDate != null && last.HasValue && sf.SyncDate >= last.Value.Subtract(TimeSpan.FromHours(2)) )
+			return Files.Where(sf => sf.IsSynced && !sf.IsWatched && !sf.IsMissing
+				&& sf.SyncDate != null && last.HasValue && sf.SyncDate >= last.Value.Subtract(TimeSpan.FromHours(2)))
 				.OrderBy(sf => sf.Season).ThenBy(sf => sf.Episode).ToList();
 		}
 		/// <summary>
@@ -334,36 +277,36 @@ namespace Models
 
 				list.AddRange(nextEpisodes.Select(e => EpisodeFile(season.Value, e)).ToList());
 			}
-			
+
 			if (HasSeasonsAfter(season.Value) && !taketwo) //Has more Seasons
 			{
 				int seasonAfter = SeasonAfter(season.Value);
-				List<int> nextEpisodes = NextEpisodes(seasonAfter, MinEpisode(seasonAfter).Value -1, 1);
+				List<int> nextEpisodes = NextEpisodes(seasonAfter, MinEpisode(seasonAfter).Value - 1, 1);
 				list.AddRange(nextEpisodes.Select(e => EpisodeFile(seasonAfter, e)));
 			}
 
 			return list.OrderBy(sf => sf.Season).ThenBy(sf => sf.Episode).ToList();
-		}		
+		}
 		public List<SyncFile> GetNotWatchedFiles()
 		{
 			return Files.Where(sf => sf.IsSynced && !sf.IsWatched || sf.IsMissing).OrderBy(sf => sf.Season).ThenBy(sf => sf.Episode).ToList();
 		}
 		public List<SyncFile> GetErrorSyncFiles()
 		{
-			return Files.Where(sf => (!sf.IsSynced && (sf.FileDate.HasValue && (DateTime.Now.Subtract(sf.FileDate.Value)) > TimeSpan.FromDays(10)) )
-														|| sf.IsMissing 
-														|| (Error && !sf.IsSynced) )
+			return Files.Where(sf => (!sf.IsSynced && (sf.FileDate.HasValue && (DateTime.Now.Subtract(sf.FileDate.Value)) > TimeSpan.FromDays(10)))
+														|| sf.IsMissing
+														|| (Error && !sf.IsSynced))
 
 				.OrderByDescending(sf => sf.FileDate).ToList();
 		}
-		
+
 		#endregion
-		
+
 		public override string ToString()
 		{
 			return Name;
 		}
-		
+
 		public static bool StructureExits(List<DirectoryInfo> directories)
 		{
 			if (!directories.Any())
@@ -421,22 +364,6 @@ namespace Models
 			return false;
 		}
 
-		#region Update Event
-//		public delegate void PathUpdateEvent(object sender, PathUpdateEventArgs args);
-//		public event PathUpdateEvent SyncPathUpdate;
-//		public class PathUpdateEventArgs
-//		{
-//			public SyncPath Path;
-//			public List<SyncFile> Files;
-//		}
-//
-//		private void RaiseSyncStatusChanged(List<SyncFile> files )
-//		{
-//			if (SyncPathUpdate != null)
-//				SyncPathUpdate(this, new PathUpdateEventArgs { Path = this, Files = files});
-//		}
-		#endregion
-
 		#region Status
 
 		public void SetSyncFilesCompleted()
@@ -463,7 +390,7 @@ namespace Models
 			Status = status;
 			ErrorDescription = string.IsNullOrEmpty(desc) ? StatusDescription[status] : desc;
 
-			if(Status == SyncStatus.Error || Status == SyncStatus.FileError)
+			if (Status == SyncStatus.Error || Status == SyncStatus.FileError)
 				SetError();
 		}
 
@@ -474,90 +401,23 @@ namespace Models
 		public string GetDirCreateMessage()
 		{
 			return string.Format("Destination Dir Created [{0}]", DestinationDir.FullName);
-		}		
+		}
 		public string GetDirFailedCreateMessage()
 		{
 			return string.Format("Failed to Create Directory [{0}]", DestinationDir.FullName);
-		}		
+		}
 		public string GetNotExistingFilesMessage()
 		{
 			return string.Format("File does not Exist in Source Dir [{0}] \nFiles: {1}",
-				SourceDir, 
+				SourceDir,
 				string.Join("\n", NonExistingFiles.Select(sf => sf.File.FullName)));
-		}		
+		}
 		public string GetFailedCopyFilesMessage()
 		{
 			return string.Format("Files failed to Copy to: [{0}] \nFiles: {1}",
 				DestinationDir.FullName,
 				HasErrorFiles.Select(sf => sf.File.Name + "\n"));
 		}
-
-		#endregion
-			
-		#region Enums
-
-		public enum SyncStatus
-		{
-			/// <summary>
-			/// No Status is set
-			/// </summary>
-			New,
-
-			/// <summary>
-			/// Path was Passed TeraCopy
-			/// </summary>
-			Copied,
-
-			/// <summary>
-			/// Files in the SyncPath was skipped because File is Locked.
-			/// </summary>
-			FileError,
-
-			/// <summary>
-			/// Some Error Occured, Either copy failed or some event prevented copy to proceed successfully
-			/// </summary>
-			Error,
-
-			/// <summary>
-			/// A Update of this Path is available - new files found 
-			/// </summary>
-			UpdateAvailable,
-
-			/// <summary>
-			/// The Destination Directory has been Created
-			/// </summary>
-			DirInfo
-		}
-
-		public static readonly Dictionary<SyncStatus, Color> StatusColor = new Dictionary<SyncStatus, Color>
-		{
-			{SyncStatus.New, Color.White},
-			{SyncStatus.Copied, Color.LightGreen},
-			{SyncStatus.FileError, Color.Orange},
-			{SyncStatus.Error, Color.IndianRed},
-			{SyncStatus.UpdateAvailable, Color.LightBlue},
-			{SyncStatus.DirInfo, Color.MediumPurple}
-		};
-
-		public static readonly Dictionary<SyncStatus, string> StatusDescription = new Dictionary<SyncStatus, string>
-		{
-			{SyncStatus.New, "None"},
-			{SyncStatus.Copied, "Files Copied"},
-			{SyncStatus.FileError, "File Error"},
-			{SyncStatus.Error, "Error Occured"},
-			{SyncStatus.UpdateAvailable, "Update Available"},
-			{SyncStatus.DirInfo, "New Destination Directory Created"}
-		};
-
-		public Dictionary<SyncStatus, int> StatusPriority = new Dictionary<SyncStatus, int>
-		{
-			{SyncStatus.New, 1},
-			{SyncStatus.Copied, 2},
-			{SyncStatus.UpdateAvailable, 3},
-			{SyncStatus.FileError, 4},
-			{SyncStatus.DirInfo, 5},
-			{SyncStatus.Error, 6},
-		};
 
 		#endregion
 	}
@@ -572,157 +432,6 @@ namespace Models
 		public int GetHashCode(FileInfo obj)
 		{
 			return obj.FullName.GetHashCode();
-		}
-	}
-
-	[Table("TBL_SYNCDATA")]
-	public class SyncFile
-	{
-		[Column("ID", Column.DataType.Guid, PrimaryKey = true)]
-		public Guid ID { get; set; }
-
-		[Column("SYNCPATHID", Column.DataType.Guid, NotNull = true)]
-		public Guid SYNCPATHID { get; set; }
-
-		[Column("SYNCDATE", Column.DataType.DateTime)]
-		public DateTime? SyncDate { get; set; }				//Date Synced
-
-		[Column("FILEDATE", Column.DataType.DateTime)]
-		public DateTime? FileDate { get; set; }				//Download Complete
-
-		[Column("WATCHDATE", Column.DataType.DateTime)]
-		public DateTime? WatchDate { get; set; }
-
-		[Column("SEASON", Column.DataType.Integer)]
-		public int? Season { get; set; }
-
-		[Column("EPISODE", Column.DataType.Integer)]
-		public int? Episode { get; set; }
-
-		[Column("ISSYNCED", Column.DataType.Boolean)]
-		public bool IsSynced { get; set; }						//New Synched files
-
-		[Column("ISWATCHED", Column.DataType.Boolean)]
-		public bool IsWatched { get; set; }
-
-		[Column("ISMISSING", Column.DataType.Boolean)]
-		public bool IsMissing { get; set; }
-		
-		[Column("FILENAME", Column.DataType.String)]
-		public FileInfo File { get; set; }
-
-
-		public bool AllowIsSyncEdit { get; set; }
-		public bool AllowIsWatchedEdit { get; set; }
-		public int Error { get; set; }
-
-		//Used with Reading Data from the database
-		public SyncFile(Guid id, DateTime? syncdate, DateTime? filedate, bool issynced, bool iswatched, DateTime? watchdate, bool ismissing, int season, int episode, string file)
-		{
-			ID = id;
-			SyncDate = syncdate;
-			FileDate = filedate;
-			IsSynced = issynced;
-			IsWatched = iswatched;
-			Season = season;
-			Episode = episode;
-			IsMissing = ismissing;
-			WatchDate = watchdate;
-			File = new FileInfo(file);
-		}
-		
-		//Used with SyncInformation swopping for View
-		public SyncFile(string guid, bool iswatched, bool isSynced, int season, int episode, DateTime? watchdate)
-		{
-			ID = Guid.Parse(guid);
-			IsWatched = iswatched;
-			WatchDate = watchdate;
-			IsSynced = isSynced; //Dependent on AllowIsSyncEdit - otherwize view returns false for checkbox
-			Season = season;
-			Episode = episode;
-		}		
-		
-		//Used with Watch Ajax Call
-		public SyncFile(string guid, bool iswatched)
-		{
-			ID = Guid.Parse(guid);
-			IsWatched = iswatched;
-			WatchDate = iswatched ? DateTime.Now : (DateTime?)null;
-		}		
-		
-		//Used with Update Ajax Call
-		public SyncFile(string guid, bool isSynced, bool isMissing, int season, int episode)
-		{
-			ID = Guid.Parse(guid);
-			IsSynced = isSynced;
-			IsMissing = isMissing;
-			Season = season;
-			Episode = episode;
-		}
-
-		//Used with Adding new Files
-		public SyncFile(FileInfo fi)
-		{
-			ID = Guid.NewGuid();
-			File = fi;
-			FileDate = fi.CreationTime;
-		}		
-		
-		public SyncFile(SyncPath sp, int season, int episode, bool ismissing)
-		{
-			ID = Guid.NewGuid();
-			Season = season;
-			Episode = episode;
-			IsMissing = ismissing;
-			File = new FileInfo(string.Format("MissingFile.{2}.S{0}E{1}", Season, Episode, sp.Name.Replace(" ","")));
-		}
-
-		public void UpdateFromMissingFile(SyncFile syncFile)
-		{
-			IsMissing = false;
-			File = syncFile.File;
-			FileDate = syncFile.File.CreationTime;
-		}
-
-		public void SetError()
-		{
-			Error = 1;
-		}
-
-		public void SetSynced()
-		{
-			IsSynced = true;
-			SyncDate = DateTime.Now;
-		}
-
-		public void DetermineSeasonEpisode()
-		{
-			List<string> regexes = new List<string>() { @"S(\d{1,2})E(\d{1,2})", @"(\d{1,2})x(\d{1,2})", @".(\d\d)(\d{1,2}).hdtv", @".(\d\d)(\d{1,2}).X264", @".(\d)(\d{1,2}).hdtv", @".(\d)(\d{1,2}).X264", @"(\d)(\d\d)" };
-			Season = Episode = 0;
-			int season = 0, episode = 0;
-			foreach (string r in regexes)
-			{
-				Regex regex_SddEdd = new Regex(r, RegexOptions.IgnoreCase);
-				Match match = regex_SddEdd.Match(File.Name);
-
-				if (!match.Success)
-					continue;
-
-				string s = match.Groups[1].Value;
-				string e = match.Groups[2].Value;
-
-				if (!(Int32.TryParse(s, out season) && Int32.TryParse(e, out episode)))
-					continue;
-
-				Season = season;
-				Episode = episode;
-				break;
-			}
-		}
-
-		public override string ToString()
-		{
-			return string.Format("{0}: [{1}-{2}]", File.Name, Season, Episode);
 		}
 	}
 }

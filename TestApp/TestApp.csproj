@@ -89,9 +89,12 @@
       <Name>Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\MediaSyncService\MediaSyncService.csproj">
-      <Project>{87bd8d2a-bc4a-40e1-991e-ab258567a6b9}</Project>
+      <Project>{87BD8D2A-BC4A-40E1-991E-AB258567A6B9}</Project>
       <Name>MediaSyncService</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

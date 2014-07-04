@@ -11,7 +11,10 @@ namespace MediaSync
 	public interface IMediaSyncService : IDataService
 	{
 		[OperationContract]
-		List<SyncPath> Domain_GetAllForSyncPath();
+		List<SyncPath> Domain_SelectAllSyncPath();
+
+		[OperationContract]
+		List<SyncPath> GetSyncPathCache();
 
 		[OperationContract]
 		List<SyncPath> Data_GetAllCollection();

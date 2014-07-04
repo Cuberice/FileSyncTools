@@ -26,8 +26,8 @@ namespace Common.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("data source=C:\\Development\\SourceVaults\\PersonalVault\\Neil\\FileSyncTool\\Database\\" +
-            "SQLiteDatabaseFile")]
+        [global::System.Configuration.DefaultSettingValueAttribute("data source=C:\\Development\\SourceVaults\\GIT\\GitHub\\FileSyncTools\\Content\\MediaSyn" +
+            "c.sqlitedb")]
         public string DbConnectionString {
             get {
                 return ((string)(this["DbConnectionString"]));

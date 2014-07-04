@@ -40,8 +40,10 @@
 			this.txtWhere = new System.Windows.Forms.TextBox();
 			this.button8 = new System.Windows.Forms.Button();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.button9 = new System.Windows.Forms.Button();
+			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.button10 = new System.Windows.Forms.Button();
+			this.button11 = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
@@ -176,16 +178,6 @@
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Core";
 			// 
-			// groupBox2
-			// 
-			this.groupBox2.Controls.Add(this.button8);
-			this.groupBox2.Location = new System.Drawing.Point(572, 6);
-			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(292, 110);
-			this.groupBox2.TabIndex = 12;
-			this.groupBox2.TabStop = false;
-			this.groupBox2.Text = "Domain";
-			// 
 			// button9
 			// 
 			this.button9.Location = new System.Drawing.Point(141, 80);
@@ -195,6 +187,38 @@
 			this.button9.Text = "Debug Assemblies";
 			this.button9.UseVisualStyleBackColor = true;
 			this.button9.Click += new System.EventHandler(this.DebugAssemblies_Click);
+			// 
+			// groupBox2
+			// 
+			this.groupBox2.Controls.Add(this.button11);
+			this.groupBox2.Controls.Add(this.button10);
+			this.groupBox2.Controls.Add(this.button8);
+			this.groupBox2.Location = new System.Drawing.Point(572, 6);
+			this.groupBox2.Name = "groupBox2";
+			this.groupBox2.Size = new System.Drawing.Size(292, 110);
+			this.groupBox2.TabIndex = 12;
+			this.groupBox2.TabStop = false;
+			this.groupBox2.Text = "Domain";
+			// 
+			// button10
+			// 
+			this.button10.Location = new System.Drawing.Point(141, 19);
+			this.button10.Name = "button10";
+			this.button10.Size = new System.Drawing.Size(129, 23);
+			this.button10.TabIndex = 11;
+			this.button10.Text = "Benchmark";
+			this.button10.UseVisualStyleBackColor = true;
+			this.button10.Click += new System.EventHandler(this.Benchmark_Click);
+			// 
+			// button11
+			// 
+			this.button11.Location = new System.Drawing.Point(6, 48);
+			this.button11.Name = "button11";
+			this.button11.Size = new System.Drawing.Size(129, 23);
+			this.button11.TabIndex = 12;
+			this.button11.Text = "Website Select";
+			this.button11.UseVisualStyleBackColor = true;
+			this.button11.Click += new System.EventHandler(this.WebsiteSelect_Click);
 			// 
 			// TestForm
 			// 
@@ -231,5 +255,7 @@
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.GroupBox groupBox2;
 		private System.Windows.Forms.Button button9;
+		private System.Windows.Forms.Button button10;
+		private System.Windows.Forms.Button button11;
 	}
 }

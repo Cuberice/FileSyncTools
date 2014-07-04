@@ -421,6 +421,10 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Core\Adapter\DataAdapter.csproj">
+      <Project>{BE4C1252-68E1-4380-A744-37A9EC055F4B}</Project>
+      <Name>DataAdapter</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{cf22c6d6-d787-4651-9a56-75e8f0a1ff37}</Project>
       <Name>Common</Name>

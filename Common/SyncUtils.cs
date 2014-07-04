@@ -676,6 +676,7 @@ namespace Common
 			return list;
 		}
 
+		[Obsolete("Use the MediaSyncService")]
 		public static List<SyncPath> View_GetAllCollection()
 		{
 			List<SyncPath> list = View_GetAllData();
@@ -685,7 +686,7 @@ namespace Common
 			}
 			return list.Where(sp => sp.Files.Any()).OrderBy(sp => sp.Name).ToList();
 		}
-
+		[Obsolete("Use the MediaSyncService")]
 		public static List<SyncPath> View_GetNotSyncedCollection()
 		{
 			List<SyncPath> list = View_GetAllData();
@@ -696,7 +697,7 @@ namespace Common
 
 			return list.Where(sp => sp.Files.Any()).OrderByDescending(sp => sp.LastFileDate).ToList();
 		}
-
+		[Obsolete("Use the MediaSyncService")]
 		public static List<SyncPath> View_SyncedCollection()
 		{
 			List<SyncPath> list = View_GetAllData();
@@ -710,7 +711,7 @@ namespace Common
 
 			return list.Where(sp => sp.Files.Any()).OrderByDescending(sp => sp.LastSyncDate).ToList();
 		}
-
+		[Obsolete("Use the MediaSyncService")]
 		public static List<SyncPath> View_GetWatchCollection()
 		{
 			List<SyncPath> list = View_GetAllData();
@@ -720,8 +721,8 @@ namespace Common
 			}
 
 			return list.Where(sp => sp.Files.Any()).OrderBy(sp => sp.LastWatchDate).ToList();
-		}		
-		
+		}
+		[Obsolete("Use the MediaSyncService")]
 		public static List<SyncPath> View_GetNotWatchedCollection()
 		{
 			List<SyncPath> list = View_GetAllData();
@@ -732,7 +733,7 @@ namespace Common
 
 			return list.Where(sp => sp.Files.Any()).OrderBy(sp => sp.LastSyncDate).ToList();
 		}
-
+		[Obsolete("Use the MediaSyncService")]
 		public static List<SyncPath> View_GetErrorCollection()
 		{
 			List<SyncPath> list = View_GetAllData();

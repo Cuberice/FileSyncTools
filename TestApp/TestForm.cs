@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
+using Common;
 using Core.Data;
-using Core.Models;
 using Core.Service;
 using Models;
 
@@ -51,12 +52,32 @@ namespace MediaSync
 			List<CoreEquipment> data = CoreDataService.GetAllForModelNoCache<CoreEquipment>(); 
 			Grid.DataSource = data;
 		}
+		private void DomainSelect_Click(object sender, EventArgs e)
+		{
+			Stopwatch sw = new Stopwatch();
+			sw.Start();
+			List<SyncPath> data = DomainDataService.Data_GetNotWatchedCollection();
+			sw.Stop();
+			long first = sw.ElapsedMilliseconds;
+			
+			Grid.DataSource = data;
+		}
+		private void WebsiteSelect_Click(object sender, EventArgs e)
+		{
+			Stopwatch sw = new Stopwatch();
+			sw.Start();
+			List<SyncPath> data = DomainDataService.Data_GetAllCollection();
+			sw.Stop();
+			long second = sw.ElapsedMilliseconds;
+
+			Grid.DataSource = data;
+		}
 
 		private void Insert_Click(object sender, EventArgs e)
 		{
-			List<CoreEquipment> data = ModelExtensions.CreateTestInstances<CoreEquipment>(3);
+			List<SyncPath> data = ModelExtensions.CreateTestInstances<SyncPath>(2000);
 			data.ForEach(i => CoreDataService.InsertModel(i));
-			data.Select(i => i.Make).ToList().ForEach(i => CoreDataService.InsertModel(i));
+			data.SelectMany(i => i.Files).ToList().ForEach(i => CoreDataService.InsertModel(i));
 			Grid.DataSource = data;
 		}
 
@@ -86,13 +107,7 @@ namespace MediaSync
 			ExpressionExtensions.FromExpression<CoreEquipment>(eq => eq.Make.Equals(new CoreEquipmentMake()));
 			ExpressionExtensions.FromExpression<CoreEquipment>(eq => !eq.IsBroken);
 		}
-
-		private void DomainSelect_Click(object sender, EventArgs e)
-		{
-			List<SyncPath> data = DomainDataService.Domain_GetAllForSyncPath();
-			Grid.DataSource = data;
-		}
-
+		
 		private void DebugAssemblies_Click(object sender, EventArgs e)
 		{
 			List<Table> data = AttributeExtensions.DebugGetNamespaceTableTypes();
@@ -101,5 +116,20 @@ namespace MediaSync
 			Grid.DataSource = data;
 		}
 
+		private void Benchmark_Click(object sender, EventArgs e)
+		{
+			Stopwatch sw = new Stopwatch();
+			sw.Start();
+			List<SyncPath> data = DomainDataService.Domain_SelectAllSyncPath();
+			sw.Stop();
+			long service = sw.ElapsedMilliseconds;
+
+		
+			sw.Reset();
+			sw.Start();
+			List<SyncPath> old = SyncUtils.View_GetAllData();
+			sw.Stop();
+			long oldtime = sw.ElapsedMilliseconds;
+		}
 	}
 }
