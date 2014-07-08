@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Common;
-using MediaSync;
 using Models;
 using SyncMobile.Models;
+using SyncMobile2.MediaServiceReference;
 
 namespace SyncMobile.Controllers
 {
 	public class HomeController : Controller
 	{
+		MediaSyncServiceClient MediaService = new MediaSyncServiceClient();
+
 		#region HttpGet
 
 		public ActionResult RefreshData()
@@ -26,19 +28,17 @@ namespace SyncMobile.Controllers
 			ViewBag.Title = "Last Synchronized Items";
 			ViewBag.Message = "Recently Synchronized groupd by Directory";
 
-			List<SyncPath> col;
 			try
 			{
-				col = SyncUtils.View_SyncedCollection();
+				List<SyncPath> col = MediaService.Data_SyncedCollection();
+				SyncGroup sg = new SyncGroup { SyncInformations = GetInformationModelData(col).ToList() };
+				sg.AllowEditWatch();
+				return View(sg);
 			}
 			catch (Exception c)
 			{
 				return RedirectToAction("Error", new { exceptionmessage = c });
 			}
-
-			SyncGroup sg = new SyncGroup {SyncInformations = GetInformationModelData(col).ToList()};
-			sg.AllowEditWatch();
-			return View(sg);
 		}
 
 		public ActionResult NotSynced()
@@ -49,7 +49,7 @@ namespace SyncMobile.Controllers
 			List<SyncPath> col;
 			try
 			{
-				col = SyncUtils.View_GetNotSyncedCollection();
+				col = MediaService.Data_GetNotSyncedCollection();
 			}
 			catch (Exception c)
 			{
@@ -68,7 +68,7 @@ namespace SyncMobile.Controllers
 
 			try
 			{
-				col = SyncUtils.View_GetErrorCollection();
+				col = MediaService.Data_GetErrorCollection();
 			}
 			catch (Exception c)
 			{
@@ -88,7 +88,7 @@ namespace SyncMobile.Controllers
 			List<SyncPath> col;
 			try
 			{
-				col = SyncUtils.View_GetWatchCollection();
+				col = MediaService.Data_GetWatchCollection();
 			}
 			catch(Exception c)
 			{
@@ -106,7 +106,7 @@ namespace SyncMobile.Controllers
 			List<SyncPath> col;
 			try
 			{
-				col = SyncUtils.View_GetNotWatchedCollection();
+				col = MediaService.Data_GetNotWatchedCollection();
 			}
 			catch (Exception c)
 			{
@@ -124,7 +124,7 @@ namespace SyncMobile.Controllers
 			List<SyncPath> col;
 			try
 			{
-				col = SyncUtils.View_GetAllCollection();
+				col = MediaService.Data_GetAllCollection();
 			}
 			catch (Exception c)
 			{

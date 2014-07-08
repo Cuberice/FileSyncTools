@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel;
 using Common;
 using Core;
 using Core.Service;
@@ -9,6 +10,7 @@ using Models;
 
 namespace MediaSync
 {
+	[ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
 	public class MediaSyncService : DataService, IMediaSyncService
 	{
 		protected List<SyncPath> CachedPaths { get { return Cache.ContainsKey("SyncPath") ? Cache["SyncPath"].OfType<SyncPath>().ToList() : null; } } 
@@ -37,6 +39,12 @@ namespace MediaSync
 			}
 			return list.Where(sp => sp.Files.Any()).OrderBy(sp => sp.Name).ToList();
 		}
+		public List<SyncPath> Data_GetAllCollectionAmount(int amount)
+		{
+			List<SyncPath> data = Data_GetAllCollection();
+			return data.Take(amount).ToList();
+		}
+
 		public List<SyncPath> Data_SyncedCollection()
 		{
 			List<SyncPath> list = GetSyncPathCache();
@@ -49,8 +57,21 @@ namespace MediaSync
 			}
 
 			return list.Where(sp => sp.Files.Any()).OrderByDescending(sp => sp.LastSyncDate).ToList();
-		
+		}		
+		public List<SyncPath> Data_SyncedCollection2()
+		{
+			List<SyncPath> list = GetSyncPathCache();
+			DateTime? last = SyncUtils.GetLastSyncDate(list);
+
+			list = last.HasValue ? list.Where(sp => sp.LastSyncDate >= last.Value.Subtract(TimeSpan.FromHours(2))).ToList() : list;
+			foreach (SyncPath sp in list)
+			{
+				sp.SetFiles(() => sp.GetSyncedFiles(last));
+			}
+
+			return list.Where(sp => sp.Files.Any()).OrderByDescending(sp => sp.LastSyncDate).ToList();
 		}
+
 		public List<SyncPath> Data_GetNotSyncedCollection()
 		{
 			List<SyncPath> list = GetSyncPathCache();
@@ -107,6 +128,11 @@ namespace MediaSync
 		public void SubmitFileDelete(Guid id)
 		{
 			throw new NotImplementedException();
+		}
+
+		public void TestMethod(SyncFile f)
+		{
+			
 		}
 	}
 }

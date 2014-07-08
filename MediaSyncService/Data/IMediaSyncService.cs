@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ServiceModel;
-using Common;
 using Core.Service;
 using Models;
 
@@ -18,6 +17,9 @@ namespace MediaSync
 
 		[OperationContract]
 		List<SyncPath> Data_GetAllCollection();
+
+		[OperationContract]
+		List<SyncPath> Data_GetAllCollectionAmount(int amount);
 	
 		[OperationContract]
 		List<SyncPath> Data_SyncedCollection();
@@ -43,5 +45,8 @@ namespace MediaSync
 
 		[OperationContract]
 		void SubmitFileDelete(Guid id);
+
+		[OperationContract]
+		void TestMethod(SyncFile f);
 	}
 }

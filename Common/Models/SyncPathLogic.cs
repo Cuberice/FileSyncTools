@@ -146,7 +146,7 @@ namespace Models
 				file = file.Where(f => f.Name == sf.File.Name).ToList();
 
 				if (file.Any() && file.First().Exists)
-					sf.file = file.First();
+					sf.File = file.First();
 			}
 		}
 

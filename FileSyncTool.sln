@@ -33,17 +33,25 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "32Bit", "32Bit", "{FF2B04FE
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SyncMobile2", "SyncMobile2\SyncMobile2.csproj", "{E46EDD58-F43D-4C69-9C34-7A33BB7291A0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{87BD8D2A-BC4A-40E1-991E-AB258567A6B9} = {87BD8D2A-BC4A-40E1-991E-AB258567A6B9}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAdapter", "..\Core\Adapter\DataAdapter.csproj", "{BE4C1252-68E1-4380-A744-37A9EC055F4B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaSyncService", "MediaSyncService\MediaSyncService.csproj", "{87BD8D2A-BC4A-40E1-991E-AB258567A6B9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestApp", "TestApp\TestApp.csproj", "{F55A734F-5DF6-4E47-854C-1D2008039336}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4365BBE0-01A8-49FD-A2EC-59CC5729BFC5} = {4365BBE0-01A8-49FD-A2EC-59CC5729BFC5}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Content", "Content", "{1CB028EE-AF34-43D2-A34A-83E287D24C13}"
 	ProjectSection(SolutionItems) = preProject
 		Content\MediaSync.sqlitedb = Content\MediaSync.sqlitedb
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestingService", "TestingService\TestingService.csproj", "{4365BBE0-01A8-49FD-A2EC-59CC5729BFC5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -300,6 +308,36 @@ Global
 		{F55A734F-5DF6-4E47-854C-1D2008039336}.SingleImage|Mixed Platforms.Build.0 = Release|Any CPU
 		{F55A734F-5DF6-4E47-854C-1D2008039336}.SingleImage|x64.ActiveCfg = Release|Any CPU
 		{F55A734F-5DF6-4E47-854C-1D2008039336}.SingleImage|x86.ActiveCfg = Release|Any CPU
+		{4365BBE0-01A8-49FD-A2EC-59CC5729BFC5}.CD_ROM|Any CPU.ActiveCfg = Release|Any CPU
+		{4365BBE0-01A8-49FD-A2EC-59CC5729BFC5}.CD_ROM|Any CPU.Build.0 = Release|Any CPU
+		{4365BBE0-01A8-49FD-A2EC-59CC5729BFC5}.CD_ROM|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{4365BBE0-01A8-49FD-A2EC-59CC5729BFC5}.CD_ROM|Mixed Platforms.Build.0 = Release|Any CPU
+		{4365BBE0-01A8-49FD-A2EC-59CC5729BFC5}.CD_ROM|x64.ActiveCfg = Release|Any CPU
+		{4365BBE0-01A8-49FD-A2EC-59CC5729BFC5}.CD_ROM|x86.ActiveCfg = Release|Any CPU
+		{4365BBE0-01A8-49FD-A2EC-59CC5729BFC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4365BBE0-01A8-49FD-A2EC-59CC5729BFC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4365BBE0-01A8-49FD-A2EC-59CC5729BFC5}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{4365BBE0-01A8-49FD-A2EC-59CC5729BFC5}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{4365BBE0-01A8-49FD-A2EC-59CC5729BFC5}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{4365BBE0-01A8-49FD-A2EC-59CC5729BFC5}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4365BBE0-01A8-49FD-A2EC-59CC5729BFC5}.DVD-5|Any CPU.ActiveCfg = Debug|Any CPU
+		{4365BBE0-01A8-49FD-A2EC-59CC5729BFC5}.DVD-5|Any CPU.Build.0 = Debug|Any CPU
+		{4365BBE0-01A8-49FD-A2EC-59CC5729BFC5}.DVD-5|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{4365BBE0-01A8-49FD-A2EC-59CC5729BFC5}.DVD-5|Mixed Platforms.Build.0 = Debug|Any CPU
+		{4365BBE0-01A8-49FD-A2EC-59CC5729BFC5}.DVD-5|x64.ActiveCfg = Debug|Any CPU
+		{4365BBE0-01A8-49FD-A2EC-59CC5729BFC5}.DVD-5|x86.ActiveCfg = Debug|Any CPU
+		{4365BBE0-01A8-49FD-A2EC-59CC5729BFC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4365BBE0-01A8-49FD-A2EC-59CC5729BFC5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4365BBE0-01A8-49FD-A2EC-59CC5729BFC5}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{4365BBE0-01A8-49FD-A2EC-59CC5729BFC5}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{4365BBE0-01A8-49FD-A2EC-59CC5729BFC5}.Release|x64.ActiveCfg = Release|Any CPU
+		{4365BBE0-01A8-49FD-A2EC-59CC5729BFC5}.Release|x86.ActiveCfg = Release|Any CPU
+		{4365BBE0-01A8-49FD-A2EC-59CC5729BFC5}.SingleImage|Any CPU.ActiveCfg = Release|Any CPU
+		{4365BBE0-01A8-49FD-A2EC-59CC5729BFC5}.SingleImage|Any CPU.Build.0 = Release|Any CPU
+		{4365BBE0-01A8-49FD-A2EC-59CC5729BFC5}.SingleImage|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{4365BBE0-01A8-49FD-A2EC-59CC5729BFC5}.SingleImage|Mixed Platforms.Build.0 = Release|Any CPU
+		{4365BBE0-01A8-49FD-A2EC-59CC5729BFC5}.SingleImage|x64.ActiveCfg = Release|Any CPU
+		{4365BBE0-01A8-49FD-A2EC-59CC5729BFC5}.SingleImage|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

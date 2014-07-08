@@ -216,9 +216,9 @@
 			this.button11.Name = "button11";
 			this.button11.Size = new System.Drawing.Size(129, 23);
 			this.button11.TabIndex = 12;
-			this.button11.Text = "Website Select";
+			this.button11.Text = "Test Service";
 			this.button11.UseVisualStyleBackColor = true;
-			this.button11.Click += new System.EventHandler(this.WebsiteSelect_Click);
+			this.button11.Click += new System.EventHandler(this.TestService_Click);
 			// 
 			// TestForm
 			// 

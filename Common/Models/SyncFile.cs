@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
 using System.Text.RegularExpressions;
 using Core;
 using Core.Data;
@@ -10,49 +11,63 @@ using Core.Data;
 namespace Models
 {
 	[Table("TBL_SYNCDATA")]
+	[DataContract]
 	public class SyncFile : ITestObject
 	{
 		public SyncFile()
 		{
 		}
 
+		[DataMember]
 		[Column("ID", Column.DataType.Guid, PrimaryKey = true)]
 		public Guid ID { get; set; }
 
+		[DataMember]
 		[Column("SYNCPATHID", Column.DataType.Guid, NotNull = true)]
 		public Guid SyncPathId { get; set; }
 
+		[DataMember]
 		[Column("FILENAME", Column.DataType.String, NotNull = true)]
 		public string FileName { get; set; }
 
+		[DataMember]
 		[Column("SYNCDATE", Column.DataType.DateTime)]
 		public DateTime? SyncDate { get; set; }				//Date Synced
 
+		[DataMember]
 		[Column("FILEDATE", Column.DataType.DateTime)]
 		public DateTime? FileDate { get; set; }				//Download Complete
 
+		[DataMember]
 		[Column("WATCHDATE", Column.DataType.DateTime)]
 		public DateTime? WatchDate { get; set; }
 
+		[DataMember]
 		[Column("SEASON", Column.DataType.Integer)]
 		public int? Season { get; set; }
 
+		[DataMember]
 		[Column("EPISODE", Column.DataType.Integer)]
 		public int? Episode { get; set; }
 
+		[DataMember]
 		[Column("ISSYNCED", Column.DataType.Boolean)]
 		public bool IsSynced { get; set; }						//New Synched files
 
+		[DataMember]
 		[Column("ISWATCHED", Column.DataType.Boolean)]
 		public bool IsWatched { get; set; }
 
+		[DataMember]
 		[Column("ISMISSING", Column.DataType.Boolean)]
 		public bool IsMissing { get; set; }
 
+		[DataMember]
 		[BackReference("SOURCEPATH")]
 		public DirectoryInfo Directory { get; set; }
 
-		public FileInfo file;
+		[DataMember]
+		protected FileInfo file;
 		public FileInfo File
 		{
 			get
@@ -62,6 +77,7 @@ namespace Models
 
 				return file;
 			}
+			set { file = value; }
 		}
 
 		public bool AllowIsSyncEdit { get; set; }

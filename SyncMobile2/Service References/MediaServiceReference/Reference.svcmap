@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="2acc5bd4-6f97-4636-bc15-9020bc70b254" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.Generic.List`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:8733/MediaSync/MediaSyncService/mex" Protocol="mex" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="24a22866-e608-4fa1-8b76-29190d24cf60" SourceId="1" SourceUrl="http://localhost:8733/MediaSync/MediaSyncService/mex" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="65ba18a8-2356-4c0c-8159-dc80bcbb79a8" SourceId="1" SourceUrl="http://localhost:8733/MediaSync/MediaSyncService/mex" />
+    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="2b543ea7-52c1-4bb4-95c5-d84270ff5250" SourceId="1" SourceUrl="http://localhost:8733/MediaSync/MediaSyncService/mex" />
+    <MetadataFile FileName="Models.xsd" MetadataType="Schema" ID="1e4303e2-1ac9-44fd-98c9-7c36d3f0c55e" SourceId="1" SourceUrl="http://localhost:8733/MediaSync/MediaSyncService/mex" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

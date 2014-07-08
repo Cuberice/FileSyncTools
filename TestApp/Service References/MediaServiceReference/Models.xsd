@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/Models" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Models" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://schemas.datacontract.org/2004/07/System.IO" />
+  <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:complexType name="ArrayOfSyncPath">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SyncPath" nillable="true" type="tns:SyncPath" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSyncPath" nillable="true" type="tns:ArrayOfSyncPath" />
+  <xs:complexType name="SyncPath">
+    <xs:sequence>
+      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/System.IO" minOccurs="0" name="DestinationDir" nillable="true" type="q1:DirectoryInfo" />
+      <xs:element minOccurs="0" name="Error" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ErrorDescription" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Files" nillable="true" type="tns:ArrayOfSyncFile" />
+      <xs:element minOccurs="0" name="ID" type="ser:guid" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/System.IO" minOccurs="0" name="SourceDir" nillable="true" type="q2:DirectoryInfo" />
+      <xs:element minOccurs="0" name="Status" type="tns:SyncPath.SyncStatus" />
+      <xs:element minOccurs="0" name="TvDbID" nillable="true" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SyncPath" nillable="true" type="tns:SyncPath" />
+  <xs:complexType name="ArrayOfSyncFile">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SyncFile" nillable="true" type="tns:SyncFile" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSyncFile" nillable="true" type="tns:ArrayOfSyncFile" />
+  <xs:complexType name="SyncFile">
+    <xs:sequence>
+      <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/System.IO" minOccurs="0" name="Directory" nillable="true" type="q3:DirectoryInfo" />
+      <xs:element minOccurs="0" name="Episode" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="FileDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="FileName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ID" type="ser:guid" />
+      <xs:element minOccurs="0" name="IsMissing" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsSynced" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsWatched" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Season" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="SyncDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="SyncPathId" type="ser:guid" />
+      <xs:element minOccurs="0" name="WatchDate" nillable="true" type="xs:dateTime" />
+      <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/System.IO" minOccurs="0" name="file" nillable="true" type="q4:FileInfo" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SyncFile" nillable="true" type="tns:SyncFile" />
+  <xs:simpleType name="SyncPath.SyncStatus">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="New" />
+      <xs:enumeration value="Copied" />
+      <xs:enumeration value="FileError" />
+      <xs:enumeration value="Error" />
+      <xs:enumeration value="UpdateAvailable" />
+      <xs:enumeration value="DirInfo" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="SyncPath.SyncStatus" nillable="true" type="tns:SyncPath.SyncStatus" />
+</xs:schema>

@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://schemas.datacontract.org/2004/07/Models" />
+  <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:element name="Domain_SelectAllSyncPath">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Domain_SelectAllSyncPathResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Models" minOccurs="0" name="Domain_SelectAllSyncPathResult" nillable="true" type="q1:ArrayOfSyncPath" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetSyncPathCache">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetSyncPathCacheResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Models" minOccurs="0" name="GetSyncPathCacheResult" nillable="true" type="q2:ArrayOfSyncPath" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Data_GetAllCollection">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Data_GetAllCollectionResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Models" minOccurs="0" name="Data_GetAllCollectionResult" nillable="true" type="q3:ArrayOfSyncPath" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Data_GetAllCollectionAmount">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="amount" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Data_GetAllCollectionAmountResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Models" minOccurs="0" name="Data_GetAllCollectionAmountResult" nillable="true" type="q4:ArrayOfSyncPath" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Data_SyncedCollection">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Data_SyncedCollectionResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Models" minOccurs="0" name="Data_SyncedCollectionResult" nillable="true" type="q5:ArrayOfSyncPath" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Data_GetNotSyncedCollection">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Data_GetNotSyncedCollectionResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Models" minOccurs="0" name="Data_GetNotSyncedCollectionResult" nillable="true" type="q6:ArrayOfSyncPath" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Data_GetWatchCollection">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Data_GetWatchCollectionResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/Models" minOccurs="0" name="Data_GetWatchCollectionResult" nillable="true" type="q7:ArrayOfSyncPath" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Data_GetNotWatchedCollection">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Data_GetNotWatchedCollectionResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/Models" minOccurs="0" name="Data_GetNotWatchedCollectionResult" nillable="true" type="q8:ArrayOfSyncPath" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Data_GetErrorCollection">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Data_GetErrorCollectionResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/Models" minOccurs="0" name="Data_GetErrorCollectionResult" nillable="true" type="q9:ArrayOfSyncPath" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SubmitFilesWatch">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="id" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="value" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SubmitFilesWatchResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SubmitFileUpdate">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/Models" minOccurs="0" name="file" nillable="true" type="q10:SyncFile" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SubmitFileUpdateResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SubmitFileDelete">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q11="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="id" type="q11:guid" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SubmitFileDeleteResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TestMethod">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/Models" minOccurs="0" name="f" nillable="true" type="q12:SyncFile" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TestMethodResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

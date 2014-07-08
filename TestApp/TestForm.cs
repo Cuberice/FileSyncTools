@@ -7,6 +7,8 @@ using Common;
 using Core.Data;
 using Core.Service;
 using Models;
+using TestApp.MediaServiceReference;
+using TestApp.TestingServiceReference;
 
 namespace MediaSync
 {
@@ -22,11 +24,14 @@ namespace MediaSync
 		protected IMediaSyncService DomainDataService { get; private set; }
 		protected IDbAdapter CoreAdapter { get { return CoreDataService.Adapter; } }
 		protected SQLBuilder Builder { get; private set; }
+		protected MediaSyncServiceClient MediaService { get; private set; }
 
 		private void TestForm_Shown(object sender, EventArgs e)
 		{
 			CoreDataService = new DataService();
 			DomainDataService = new MediaSyncService();
+			MediaService = new MediaSyncServiceClient();
+
 			Builder = new SQLBuilder(CoreDataService.Adapter);
 			Builder.CreateStructure();
 		}
@@ -62,15 +67,14 @@ namespace MediaSync
 			
 			Grid.DataSource = data;
 		}
-		private void WebsiteSelect_Click(object sender, EventArgs e)
+		private void TestService_Click(object sender, EventArgs e)
 		{
-			Stopwatch sw = new Stopwatch();
-			sw.Start();
-			List<SyncPath> data = DomainDataService.Data_GetAllCollection();
-			sw.Stop();
-			long second = sw.ElapsedMilliseconds;
+//			Service1Client s = new Service1Client();
+//			CompositeType ct = s.GetNewDataUsingDataContract();
 
-			Grid.DataSource = data;
+			int amount = 10;
+			List<SyncPath> d = MediaService.Data_GetAllCollectionAmount(amount);
+			List<SyncPath> m = MediaService.Data_GetAllCollection();
 		}
 
 		private void Insert_Click(object sender, EventArgs e)
@@ -120,14 +124,13 @@ namespace MediaSync
 		{
 			Stopwatch sw = new Stopwatch();
 			sw.Start();
-			List<SyncPath> data = DomainDataService.Domain_SelectAllSyncPath();
+			List<SyncPath> data = MediaService.Data_GetAllCollection();
 			sw.Stop();
 			long service = sw.ElapsedMilliseconds;
-
 		
 			sw.Reset();
 			sw.Start();
-			List<SyncPath> old = SyncUtils.View_GetAllData();
+			List<SyncPath> d = DomainDataService.Data_GetAllCollection();
 			sw.Stop();
 			long oldtime = sw.ElapsedMilliseconds;
 		}

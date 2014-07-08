@@ -1,0 +1,248 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="MediaSyncService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Models" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IMediaSyncService_Domain_SelectAllSyncPath_InputMessage">
+    <wsdl:part name="parameters" element="tns:Domain_SelectAllSyncPath" />
+  </wsdl:message>
+  <wsdl:message name="IMediaSyncService_Domain_SelectAllSyncPath_OutputMessage">
+    <wsdl:part name="parameters" element="tns:Domain_SelectAllSyncPathResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMediaSyncService_GetSyncPathCache_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSyncPathCache" />
+  </wsdl:message>
+  <wsdl:message name="IMediaSyncService_GetSyncPathCache_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSyncPathCacheResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMediaSyncService_Data_GetAllCollection_InputMessage">
+    <wsdl:part name="parameters" element="tns:Data_GetAllCollection" />
+  </wsdl:message>
+  <wsdl:message name="IMediaSyncService_Data_GetAllCollection_OutputMessage">
+    <wsdl:part name="parameters" element="tns:Data_GetAllCollectionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMediaSyncService_Data_SyncedCollection_InputMessage">
+    <wsdl:part name="parameters" element="tns:Data_SyncedCollection" />
+  </wsdl:message>
+  <wsdl:message name="IMediaSyncService_Data_SyncedCollection_OutputMessage">
+    <wsdl:part name="parameters" element="tns:Data_SyncedCollectionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMediaSyncService_Data_GetNotSyncedCollection_InputMessage">
+    <wsdl:part name="parameters" element="tns:Data_GetNotSyncedCollection" />
+  </wsdl:message>
+  <wsdl:message name="IMediaSyncService_Data_GetNotSyncedCollection_OutputMessage">
+    <wsdl:part name="parameters" element="tns:Data_GetNotSyncedCollectionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMediaSyncService_Data_GetWatchCollection_InputMessage">
+    <wsdl:part name="parameters" element="tns:Data_GetWatchCollection" />
+  </wsdl:message>
+  <wsdl:message name="IMediaSyncService_Data_GetWatchCollection_OutputMessage">
+    <wsdl:part name="parameters" element="tns:Data_GetWatchCollectionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMediaSyncService_Data_GetNotWatchedCollection_InputMessage">
+    <wsdl:part name="parameters" element="tns:Data_GetNotWatchedCollection" />
+  </wsdl:message>
+  <wsdl:message name="IMediaSyncService_Data_GetNotWatchedCollection_OutputMessage">
+    <wsdl:part name="parameters" element="tns:Data_GetNotWatchedCollectionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMediaSyncService_Data_GetErrorCollection_InputMessage">
+    <wsdl:part name="parameters" element="tns:Data_GetErrorCollection" />
+  </wsdl:message>
+  <wsdl:message name="IMediaSyncService_Data_GetErrorCollection_OutputMessage">
+    <wsdl:part name="parameters" element="tns:Data_GetErrorCollectionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMediaSyncService_SubmitFilesWatch_InputMessage">
+    <wsdl:part name="parameters" element="tns:SubmitFilesWatch" />
+  </wsdl:message>
+  <wsdl:message name="IMediaSyncService_SubmitFilesWatch_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SubmitFilesWatchResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMediaSyncService_SubmitFileUpdate_InputMessage">
+    <wsdl:part name="parameters" element="tns:SubmitFileUpdate" />
+  </wsdl:message>
+  <wsdl:message name="IMediaSyncService_SubmitFileUpdate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SubmitFileUpdateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMediaSyncService_SubmitFileDelete_InputMessage">
+    <wsdl:part name="parameters" element="tns:SubmitFileDelete" />
+  </wsdl:message>
+  <wsdl:message name="IMediaSyncService_SubmitFileDelete_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SubmitFileDeleteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMediaSyncService_TestMethod_InputMessage">
+    <wsdl:part name="parameters" element="tns:TestMethod" />
+  </wsdl:message>
+  <wsdl:message name="IMediaSyncService_TestMethod_OutputMessage">
+    <wsdl:part name="parameters" element="tns:TestMethodResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IMediaSyncService">
+    <wsdl:operation name="Domain_SelectAllSyncPath">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMediaSyncService/Domain_SelectAllSyncPath" message="tns:IMediaSyncService_Domain_SelectAllSyncPath_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMediaSyncService/Domain_SelectAllSyncPathResponse" message="tns:IMediaSyncService_Domain_SelectAllSyncPath_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSyncPathCache">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMediaSyncService/GetSyncPathCache" message="tns:IMediaSyncService_GetSyncPathCache_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMediaSyncService/GetSyncPathCacheResponse" message="tns:IMediaSyncService_GetSyncPathCache_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Data_GetAllCollection">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMediaSyncService/Data_GetAllCollection" message="tns:IMediaSyncService_Data_GetAllCollection_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMediaSyncService/Data_GetAllCollectionResponse" message="tns:IMediaSyncService_Data_GetAllCollection_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Data_SyncedCollection">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMediaSyncService/Data_SyncedCollection" message="tns:IMediaSyncService_Data_SyncedCollection_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMediaSyncService/Data_SyncedCollectionResponse" message="tns:IMediaSyncService_Data_SyncedCollection_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Data_GetNotSyncedCollection">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMediaSyncService/Data_GetNotSyncedCollection" message="tns:IMediaSyncService_Data_GetNotSyncedCollection_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMediaSyncService/Data_GetNotSyncedCollectionResponse" message="tns:IMediaSyncService_Data_GetNotSyncedCollection_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Data_GetWatchCollection">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMediaSyncService/Data_GetWatchCollection" message="tns:IMediaSyncService_Data_GetWatchCollection_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMediaSyncService/Data_GetWatchCollectionResponse" message="tns:IMediaSyncService_Data_GetWatchCollection_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Data_GetNotWatchedCollection">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMediaSyncService/Data_GetNotWatchedCollection" message="tns:IMediaSyncService_Data_GetNotWatchedCollection_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMediaSyncService/Data_GetNotWatchedCollectionResponse" message="tns:IMediaSyncService_Data_GetNotWatchedCollection_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Data_GetErrorCollection">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMediaSyncService/Data_GetErrorCollection" message="tns:IMediaSyncService_Data_GetErrorCollection_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMediaSyncService/Data_GetErrorCollectionResponse" message="tns:IMediaSyncService_Data_GetErrorCollection_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SubmitFilesWatch">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMediaSyncService/SubmitFilesWatch" message="tns:IMediaSyncService_SubmitFilesWatch_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMediaSyncService/SubmitFilesWatchResponse" message="tns:IMediaSyncService_SubmitFilesWatch_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SubmitFileUpdate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMediaSyncService/SubmitFileUpdate" message="tns:IMediaSyncService_SubmitFileUpdate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMediaSyncService/SubmitFileUpdateResponse" message="tns:IMediaSyncService_SubmitFileUpdate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SubmitFileDelete">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMediaSyncService/SubmitFileDelete" message="tns:IMediaSyncService_SubmitFileDelete_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMediaSyncService/SubmitFileDeleteResponse" message="tns:IMediaSyncService_SubmitFileDelete_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="TestMethod">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMediaSyncService/TestMethod" message="tns:IMediaSyncService_TestMethod_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMediaSyncService/TestMethodResponse" message="tns:IMediaSyncService_TestMethod_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IMediaSyncService" type="tns:IMediaSyncService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Domain_SelectAllSyncPath">
+      <soap:operation soapAction="http://tempuri.org/IMediaSyncService/Domain_SelectAllSyncPath" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSyncPathCache">
+      <soap:operation soapAction="http://tempuri.org/IMediaSyncService/GetSyncPathCache" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data_GetAllCollection">
+      <soap:operation soapAction="http://tempuri.org/IMediaSyncService/Data_GetAllCollection" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data_SyncedCollection">
+      <soap:operation soapAction="http://tempuri.org/IMediaSyncService/Data_SyncedCollection" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data_GetNotSyncedCollection">
+      <soap:operation soapAction="http://tempuri.org/IMediaSyncService/Data_GetNotSyncedCollection" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data_GetWatchCollection">
+      <soap:operation soapAction="http://tempuri.org/IMediaSyncService/Data_GetWatchCollection" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data_GetNotWatchedCollection">
+      <soap:operation soapAction="http://tempuri.org/IMediaSyncService/Data_GetNotWatchedCollection" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data_GetErrorCollection">
+      <soap:operation soapAction="http://tempuri.org/IMediaSyncService/Data_GetErrorCollection" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SubmitFilesWatch">
+      <soap:operation soapAction="http://tempuri.org/IMediaSyncService/SubmitFilesWatch" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SubmitFileUpdate">
+      <soap:operation soapAction="http://tempuri.org/IMediaSyncService/SubmitFileUpdate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SubmitFileDelete">
+      <soap:operation soapAction="http://tempuri.org/IMediaSyncService/SubmitFileDelete" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TestMethod">
+      <soap:operation soapAction="http://tempuri.org/IMediaSyncService/TestMethod" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="MediaSyncService">
+    <wsdl:port name="BasicHttpBinding_IMediaSyncService" binding="tns:BasicHttpBinding_IMediaSyncService">
+      <soap:address location="http://localhost:8733/MediaSync/MediaSyncService/" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
