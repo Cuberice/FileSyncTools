@@ -13,6 +13,14 @@ namespace Common
 {
 	public partial class TestForm : Form
 	{
+		[STAThread]
+		static void Main()
+		{
+			Application.EnableVisualStyles();
+			Application.SetCompatibleTextRenderingDefault(false);
+			Application.Run(new TestForm());
+		}
+
 		public TestForm()
 		{
 			InitializeComponent();
@@ -20,12 +28,8 @@ namespace Common
 
 		private void button1_Click(object sender, EventArgs e)
 		{
-			SQLiteConnection conn1 = SyncUtils.GetDataConnection();
-			bool conn1Busy = true;
-			while (conn1Busy)
-			{
-				
-			}
+			SQLiteConnection conn = SyncUtils.GetDataConnection();
+			Queries.TestCommand(conn);
 		}
 	}
 }

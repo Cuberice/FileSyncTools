@@ -511,5 +511,50 @@ namespace Common
 				return "Exception...";
 			}
 		}
+
+
+		#region Testing
+
+		public static bool TestCommand(SQLiteConnection conn)
+		{
+			try
+			{
+				using (SQLiteConnection c = new SQLiteConnection(conn.ConnectionString))
+				{
+					c.Open();
+					string command = "SELECT * FROM TBL_SYNCPATH WHERE TvDbID IN (@p1, @p2)";
+
+//					Guid guid = Guid.Parse("4409719a-dca5-4fe9-b0e8-700fbae2b342");
+//					object[] inparams = new object[] { guid };   //"4409719a-dca5-4fe9-b0e8-700fbae2b342, a639e294-4fb6-45fe-b2ec-99c884a3815a";
+
+					using (SQLiteCommand cmd_select = new SQLiteCommand(command, c))
+					{
+
+						cmd_select.Parameters.AddWithValue("@p1", 72227);
+						cmd_select.Parameters.AddWithValue("@p2", 80379);
+						using (SQLiteDataReader reader = cmd_select.ExecuteReader())
+						{
+							reader.Read();
+							Guid guid1 = reader.GetGuid(C_PathID);
+						}
+					}
+				}
+			}
+			catch (Exception e)
+			{
+				
+			}
+
+			return false;
+		}
+
+		/*
+		 * SELECT        ID, TvDbID
+			FROM            TBL_SYNCPATH
+			WHERE        (TvDbID IN (72227, 80379))
+		 */
+
+		#endregion
+
 	}
 }

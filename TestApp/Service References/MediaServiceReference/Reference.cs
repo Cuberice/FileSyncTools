@@ -57,6 +57,12 @@ namespace TestApp.MediaServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMediaSyncService/Data_GetWatchCollection", ReplyAction="http://tempuri.org/IMediaSyncService/Data_GetWatchCollectionResponse")]
         System.Threading.Tasks.Task<System.Collections.Generic.List<Models.SyncPath>> Data_GetWatchCollectionAsync();
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMediaSyncService/Data_GetNotSyncedCollection2", ReplyAction="http://tempuri.org/IMediaSyncService/Data_GetNotSyncedCollection2Response")]
+        System.Collections.Generic.List<Models.SyncPath> Data_GetNotSyncedCollection2();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMediaSyncService/Data_GetNotSyncedCollection2", ReplyAction="http://tempuri.org/IMediaSyncService/Data_GetNotSyncedCollection2Response")]
+        System.Threading.Tasks.Task<System.Collections.Generic.List<Models.SyncPath>> Data_GetNotSyncedCollection2Async();
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMediaSyncService/Data_GetNotWatchedCollection", ReplyAction="http://tempuri.org/IMediaSyncService/Data_GetNotWatchedCollectionResponse")]
         System.Collections.Generic.List<Models.SyncPath> Data_GetNotWatchedCollection();
         
@@ -175,6 +181,14 @@ namespace TestApp.MediaServiceReference {
         
         public System.Threading.Tasks.Task<System.Collections.Generic.List<Models.SyncPath>> Data_GetWatchCollectionAsync() {
             return base.Channel.Data_GetWatchCollectionAsync();
+        }
+        
+        public System.Collections.Generic.List<Models.SyncPath> Data_GetNotSyncedCollection2() {
+            return base.Channel.Data_GetNotSyncedCollection2();
+        }
+        
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<Models.SyncPath>> Data_GetNotSyncedCollection2Async() {
+            return base.Channel.Data_GetNotSyncedCollection2Async();
         }
         
         public System.Collections.Generic.List<Models.SyncPath> Data_GetNotWatchedCollection() {

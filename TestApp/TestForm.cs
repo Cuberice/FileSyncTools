@@ -98,8 +98,7 @@ namespace MediaSync
 
 		private void TestCode_Click(object sender, EventArgs e)
 		{
-			Guid guid = Guid.Parse("bd006ac3-7583-4c56-96e5-d20265e8f00f");
-			IAdapterCommand cmd = CoreDataService.Adapter.CreateSelectCommand<CoreEquipmentMake>(eq => eq.ID == guid);
+			List<SyncPath> data = DomainDataService.Data_GetNotSyncedCollection2();
 		}
 
 		private void Expression_Click(object sender, EventArgs e)
@@ -124,7 +123,7 @@ namespace MediaSync
 		{
 			Stopwatch sw = new Stopwatch();
 			sw.Start();
-			List<SyncPath> data = MediaService.Data_GetAllCollection();
+			List<SyncPath> data = DomainDataService.Data_GetNotSyncedCollection2();
 			sw.Stop();
 			long service = sw.ElapsedMilliseconds;
 		

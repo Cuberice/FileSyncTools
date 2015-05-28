@@ -50,6 +50,12 @@
   <wsdl:message name="IMediaSyncService_Data_GetWatchCollection_OutputMessage">
     <wsdl:part name="parameters" element="tns:Data_GetWatchCollectionResponse" />
   </wsdl:message>
+  <wsdl:message name="IMediaSyncService_Data_GetNotSyncedCollection2_InputMessage">
+    <wsdl:part name="parameters" element="tns:Data_GetNotSyncedCollection2" />
+  </wsdl:message>
+  <wsdl:message name="IMediaSyncService_Data_GetNotSyncedCollection2_OutputMessage">
+    <wsdl:part name="parameters" element="tns:Data_GetNotSyncedCollection2Response" />
+  </wsdl:message>
   <wsdl:message name="IMediaSyncService_Data_GetNotWatchedCollection_InputMessage">
     <wsdl:part name="parameters" element="tns:Data_GetNotWatchedCollection" />
   </wsdl:message>
@@ -114,6 +120,10 @@
     <wsdl:operation name="Data_GetWatchCollection">
       <wsdl:input wsaw:Action="http://tempuri.org/IMediaSyncService/Data_GetWatchCollection" message="tns:IMediaSyncService_Data_GetWatchCollection_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IMediaSyncService/Data_GetWatchCollectionResponse" message="tns:IMediaSyncService_Data_GetWatchCollection_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Data_GetNotSyncedCollection2">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMediaSyncService/Data_GetNotSyncedCollection2" message="tns:IMediaSyncService_Data_GetNotSyncedCollection2_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMediaSyncService/Data_GetNotSyncedCollection2Response" message="tns:IMediaSyncService_Data_GetNotSyncedCollection2_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="Data_GetNotWatchedCollection">
       <wsdl:input wsaw:Action="http://tempuri.org/IMediaSyncService/Data_GetNotWatchedCollection" message="tns:IMediaSyncService_Data_GetNotWatchedCollection_InputMessage" />
@@ -198,6 +208,15 @@
     </wsdl:operation>
     <wsdl:operation name="Data_GetWatchCollection">
       <soap:operation soapAction="http://tempuri.org/IMediaSyncService/Data_GetWatchCollection" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data_GetNotSyncedCollection2">
+      <soap:operation soapAction="http://tempuri.org/IMediaSyncService/Data_GetNotSyncedCollection2" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

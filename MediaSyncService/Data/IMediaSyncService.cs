@@ -31,6 +31,9 @@ namespace MediaSync
 		List<SyncPath> Data_GetWatchCollection();
 
 		[OperationContract]
+		List<SyncPath> Data_GetNotSyncedCollection2();
+
+		[OperationContract]
 		List<SyncPath> Data_GetNotWatchedCollection();
 
 		[OperationContract]
